@@ -13,7 +13,7 @@ namespace AkademiQMongoDb.DTOs.ProductDtos
         public string Description { get; set; }
 
         [Required(ErrorMessage = "Görsel Url boş bırakılamaz.")]
-        public string Imageurl { get; set; }
+        public string ImageUrl { get; set; }
 
         [Required(ErrorMessage = "Ürün fiyatı boş bırakılamaz.")]
         public decimal Price { get; set; }
