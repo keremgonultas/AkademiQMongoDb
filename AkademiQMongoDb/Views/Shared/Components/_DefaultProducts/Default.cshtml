@@ -1,15 +1,8 @@
-﻿
-@model List<ResultProductDto>
-@*
-    Default Products
-*@
+﻿@model List<ResultProductDto>
 
-
-<!-- Start Food Menu
-============================================= -->
 <div class="food-menu-style-two-area default-padding bg-cover" style="background-image: url(/UI/assets/img/shape/3.jpg);">
     <div class="container">
-        <!-- Single Item -->
+
         <div class="food-menu-style-two">
             <div class="row align-center">
                 <div class="col-lg-5">
@@ -20,50 +13,40 @@
                 <div class="col-lg-7">
                     <div class="food-menu-style-two-content wow fadeInUp">
                         <h4 class="sub-heading" style="text-transform: none;">ANA YEMEKLERİMİZ</h4>
-                        <ul class="meal-type">
-                            <li>Half</li>
-                            <li>Full</li>
-                        </ul>
+
                         <ul class="meal-items">
-                            
-                            @foreach (var item in Model){
-                            <li>
-                                <div class="thumbnail">
-                                    <img src="@item.ImageUrl" alt="Image Not Found">
-                                </div>
-                                <div class="content">
-                                    <div class="top">
-                                        <div class="title">
-                                            <h4><a href="shop-single.html">@item.Name</a></h4>
+                            @foreach (var item in Model.Where(x => x.CategoryName == "Ana Yemekler"))
+                            {
+                                <li>
+                                    <div class="thumbnail">
+                                        <img src="@item.ImageUrl" alt="Image Not Found" style="width:80px; height:80px; object-fit:cover;">
+                                    </div>
+                                    <div class="content">
+                                        <div class="top">
+                                            <div class="title">
+                                                <h4><a href="shop-single.html">@item.Name</a></h4>
+                                            </div>
+                                            <div class="price">
+                                                <span>@item.Price ₺</span>
+                                            </div>
                                         </div>
-                                        <div class="price">
-                                            <span>@item.Price</span>
-                                            <span>@(item.Price * 1.4m)</span>
+                                        <div class="bottom">
+                                            <div class="left">
+                                                <p>@item.Description</p>
+                                            </div>
+                                            <div class="right">
+                                                <p><i class="fas fa-utensils"></i> @item.CategoryName</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="bottom">
-                                        <div class="left">
-                                            <p>
-                                                Ricotta / goat cheese / beetroot
-                                            </p>
-                                        </div>
-                                        <div class="right">
-                                            <p>
-                                                Extra Free Juice.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
                             }
-                            
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- End Single Item -->
-        <!-- Single Item -->
+
         <div class="food-menu-style-two">
             <div class="row align-center">
                 <div class="col-lg-5">
@@ -74,129 +57,39 @@
                 <div class="col-lg-7">
                     <div class="food-menu-style-two-content wow fadeInDown">
                         <h4 class="sub-heading" style="text-transform: none;">TATLILARIMIZ</h4>
-                        <ul class="meal-type">
-                            <li>Half</li>
-                            <li>Full</li>
-                        </ul>
+
                         <ul class="meal-items">
-                            <li>
-                                <div class="thumbnail">
-                                    <img src="/UI/assets/img/food/5.jpg" alt="Image Not Found">
-                                </div>
-                                <div class="content">
-                                    <div class="top">
-                                        <div class="title">
-                                            <h4><a href="shop-single.html">Cupcakes</a></h4>
+                            @foreach (var item in Model.Where(x => x.CategoryName == "Tatlılar"))
+                            {
+                                <li>
+                                    <div class="thumbnail">
+                                        <img src="@item.ImageUrl" alt="Image Not Found" style="width:80px; height:80px; object-fit:cover;">
+                                    </div>
+                                    <div class="content">
+                                        <div class="top">
+                                            <div class="title">
+                                                <h4><a href="shop-single.html">@item.Name</a></h4>
+                                            </div>
+                                            <div class="price">
+                                                <span>@item.Price ₺</span>
+                                            </div>
                                         </div>
-                                        <div class="price">
-                                            <span>$10</span>
-                                            <span>$20</span>
+                                        <div class="bottom">
+                                            <div class="left">
+                                                <p>@item.Description</p>
+                                            </div>
+                                            <div class="right">
+                                                <p><i class="fas fa-cookie"></i> @item.CategoryName</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="bottom">
-                                        <div class="left">
-                                            <p>
-                                                Ricotta / goat cheese / beetroot
-                                            </p>
-                                        </div>
-                                        <div class="right">
-                                            <p>
-                                                Extra Free Juice.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="thumbnail">
-                                    <img src="/UI/assets/img/food/6.jpg" alt="Image Not Found">
-                                </div>
-                                <div class="content">
-                                    <div class="top">
-                                        <div class="title">
-                                            <h4><a href="shop-single.html">Brownies</a></h4>
-                                        </div>
-                                        <div class="price">
-                                            <span>$16</span>
-                                            <span>$34</span>
-                                        </div>
-                                    </div>
-                                    <div class="bottom">
-                                        <div class="left">
-                                            <p>
-                                                Atlantic / chips / salad /tartare
-                                            </p>
-                                        </div>
-                                        <div class="right">
-                                            <p>
-                                                Extra Free Juice.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="thumbnail">
-                                    <img src="/UI/assets/img/food/7.jpg" alt="Image Not Found">
-                                </div>
-                                <div class="content">
-                                    <div class="top">
-                                        <div class="title">
-                                            <h4><a href="shop-single.html">Muffins</a></h4>
-                                        </div>
-                                        <div class="price">
-                                            <span>$22</span>
-                                            <span>$36</span>
-                                        </div>
-                                    </div>
-                                    <div class="bottom">
-                                        <div class="left">
-                                            <p>
-                                                Truffle mash / pepper sauce.
-                                            </p>
-                                        </div>
-                                        <div class="right">
-                                            <p>
-                                                Extra Free Juice.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="thumbnail">
-                                    <img src="/UI/assets/img/food/8.jpg" alt="Image Not Found">
-                                </div>
-                                <div class="content">
-                                    <div class="top">
-                                        <div class="title">
-                                            <h4><a href="shop-single.html">Cheesecakes</a></h4>
-                                        </div>
-                                        <div class="price">
-                                            <span>$34</span>
-                                            <span>$66</span>
-                                        </div>
-                                    </div>
-                                    <div class="bottom">
-                                        <div class="left">
-                                            <p>
-                                                Ricotta / goat cheese / beetroot
-                                            </p>
-                                        </div>
-                                        <div class="right">
-                                            <p>
-                                                Extra Free Juice.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- End Single Item -->
+
     </div>
 </div>
-<!-- End Food Menu -->

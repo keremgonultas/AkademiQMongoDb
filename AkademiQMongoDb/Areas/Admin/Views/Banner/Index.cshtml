@@ -1,0 +1,57 @@
+﻿
+
+@{
+    ViewData["Title"] = "Banner Listesi";
+    
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Banner Listesi</h3>
+                    <div class="card-tools">
+                        <a href="/Admin/Banner/CreateBanner" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Yeni Banner Ekle
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Başlık</th>
+                                <th>Açıklama</th>
+                                <th>Görsel</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                int count = 0;
+                                foreach (var item in Model)
+                                {
+                                    count++;
+                                    <tr>
+                                        <td>@count</td>
+                                        <td>@item.Title</td>
+                                        <td>@item.Description</td>
+                                        <td><img src="@item.ImageUrl" style="width:75px; height:50px; object-fit:cover; border-radius:5px;" /></td>
+                                        <td>
+                                            <a href="/Admin/Banner/DeleteBanner/@item.Id" class="btn btn-outline-danger btn-sm">Sil</a>
+                                            <a href="/Admin/Banner/UpdateBanner/@item.Id" class="btn btn-outline-success btn-sm">Güncelle</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
