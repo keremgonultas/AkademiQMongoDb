@@ -25,18 +25,20 @@
                             <li>Full</li>
                         </ul>
                         <ul class="meal-items">
+                            
+                            @foreach (var item in Model){
                             <li>
                                 <div class="thumbnail">
-                                    <img src="/UI/assets/img/food/1.jpg" alt="Image Not Found">
+                                    <img src="@item.ImageUrl" alt="Image Not Found">
                                 </div>
                                 <div class="content">
                                     <div class="top">
                                         <div class="title">
-                                            <h4><a href="shop-single.html">Chicken Alfredo</a></h4>
+                                            <h4><a href="shop-single.html">@item.Name</a></h4>
                                         </div>
                                         <div class="price">
-                                            <span>$20</span>
-                                            <span>$30</span>
+                                            <span>@item.Price</span>
+                                            <span>@(item.Price * 1.4m)</span>
                                         </div>
                                     </div>
                                     <div class="bottom">
@@ -53,90 +55,8 @@
                                     </div>
                                 </div>
                             </li>
-                            <li>
-                                <div class="thumbnail">
-                                    <img src="/UI/assets/img/food/2.jpg" alt="Image Not Found">
-                                </div>
-                                <div class="content">
-                                    <div class="top">
-                                        <div class="title">
-                                            <h4><a href="shop-single.html">Fish &amp; Chips</a></h4>
-                                        </div>
-                                        <div class="price">
-                                            <span>$36</span>
-                                            <span>$55</span>
-                                        </div>
-                                    </div>
-                                    <div class="bottom">
-                                        <div class="left">
-                                            <p>
-                                                Atlantic / chips / salad /tartare
-                                            </p>
-                                        </div>
-                                        <div class="right">
-                                            <p>
-                                                Extra Free Juice.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="thumbnail">
-                                    <img src="/UI/assets/img/food/3.jpg" alt="Image Not Found">
-                                </div>
-                                <div class="content">
-                                    <div class="top">
-                                        <div class="title">
-                                            <h4><a href="shop-single.html">Ebony Fillet Steak</a></h4>
-                                        </div>
-                                        <div class="price">
-                                            <span>$44</span>
-                                            <span>$88</span>
-                                        </div>
-                                    </div>
-                                    <div class="bottom">
-                                        <div class="left">
-                                            <p>
-                                                Truffle mash / pepper sauce.
-                                            </p>
-                                        </div>
-                                        <div class="right">
-                                            <p>
-                                                Extra Free Juice.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="thumbnail">
-                                    <img src="/UI/assets/img/food/4.jpg" alt="Image Not Found">
-                                </div>
-                                <div class="content">
-                                    <div class="top">
-                                        <div class="title">
-                                            <h4><a href="shop-single.html">Chicken Alfredo</a></h4>
-                                        </div>
-                                        <div class="price">
-                                            <span>$20</span>
-                                            <span>$30</span>
-                                        </div>
-                                    </div>
-                                    <div class="bottom">
-                                        <div class="left">
-                                            <p>
-                                                Ricotta / goat cheese / beetroot
-                                            </p>
-                                        </div>
-                                        <div class="right">
-                                            <p>
-                                                Extra Free Juice.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+                            }
+                            
                         </ul>
                     </div>
                 </div>
