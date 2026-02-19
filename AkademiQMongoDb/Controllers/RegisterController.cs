@@ -16,7 +16,7 @@ namespace AkademiQMongoDb.Controllers
         public async Task<IActionResult> Signup(RegisterAdminDto registerAdminDto)
         {
             await _adminService.CreateAdminAsync(registerAdminDto);
-            return RedirectToAction("Index", "Login");
+            return RedirectToAction("Signin", "Login");
         }
     }
 }

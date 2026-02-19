@@ -26,7 +26,7 @@ namespace AkademiQMongoDb.Services.AdminServices
         public async Task<bool> LoginAdminAsync(LoginAdminDto loginAdminDto)
         {
             var admin = await _adminCollection.Find(x => x.Username == loginAdminDto.Username &&
-                x.Password == loginAdminDto.Password).FirstOrDefaultAsync();
+                x.Password == loginAdminDto.Password && x.IsVerified).FirstOrDefaultAsync();
 
             if (admin is null)
             {
