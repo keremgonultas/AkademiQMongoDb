@@ -23,6 +23,12 @@ namespace AkademiQMongoDb.Services.AdminServices
             await _adminCollection.InsertOneAsync(admin);
         }
 
+        public async Task<ResultAdminDto> GetAdminByUsernameAsync(string username)
+        {
+            var admin = await _adminCollection.Find(x => x.Username == username).FirstOrDefaultAsync();
+            return admin.Adapt<ResultAdminDto>();
+        }
+
         public async Task<bool> LoginAdminAsync(LoginAdminDto loginAdminDto)
         {
             var admin = await _adminCollection.Find(x => x.Username == loginAdminDto.Username &&
