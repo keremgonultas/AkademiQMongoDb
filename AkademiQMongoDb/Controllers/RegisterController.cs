@@ -1,9 +1,11 @@
 ﻿using AkademiQMongoDb.DTOs.AdminDtos;
 using AkademiQMongoDb.Services.AdminServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AkademiQMongoDb.Controllers
 {
+    [AllowAnonymous]
     public class RegisterController(IAdminService _adminService) : Controller
     {
         public IActionResult Signup()

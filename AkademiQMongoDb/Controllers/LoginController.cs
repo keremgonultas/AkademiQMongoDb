@@ -2,11 +2,13 @@
 using AkademiQMongoDb.Services.AdminServices;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace AkademiQMongoDb.Controllers
 {
+    [AllowAnonymous]
     public class LoginController(IAdminService _adminService) : Controller
     {
         [HttpGet]
@@ -49,5 +51,13 @@ namespace AkademiQMongoDb.Controllers
 
             return Redirect("/Admin/Product/Index");
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Remove("Username");
+            return RedirectToAction("Index/Default");
+        }
+
     }
 }
