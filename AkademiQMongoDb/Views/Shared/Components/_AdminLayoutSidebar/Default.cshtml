@@ -1,40 +1,54 @@
-﻿
-@*
-    Admin Layout Sidebar
-*@
+﻿@{
+    // Burası sihirli kısım: Hangi sayfada olduğumuzu (Controller adını) otomatik yakalar
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+}
 
-<aside class="flex w-64 flex-col border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark text-gray-800 dark:text-gray-200">
+<aside class="flex w-64 flex-col bg-gradient-to-b from-red-600 to-red-900 text-white shadow-2xl h-screen sticky top-0">
     <div class="flex h-full min-h-0 flex-col justify-between p-4">
         <div class="flex flex-col gap-4">
-            <div class="flex items-center gap-3 px-3 py-2">
-                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-10" data-alt="Abstract blue geometric logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAWxxP9eHwc0SevhcYfSxOMvFt_DdXPE5FsJIC8lxouie584KHDvEucXGKI5d-52r-UmwG3FuyWTn3vqw_VDh--oK0-pOPXkFavCNkjZCrrJHI6i7j2F1ei5u6oSN8PSaddQtxtVayl4QOqDObcOBZ8iPaJtOcAUQoe-HzxPuwhiWtS7BUTWDz4MEUTaUeKNl5c7-_MpgXXqwnRB-fKB5h7mz1XM5lGbL3Nm9Mro8Y5BOcuMXMblIj76KlcT0nkvRXnMbV413zVLn0");'></div>
+
+            <div class="flex items-center gap-3 px-3 py-3 border-b border-red-400/30 mb-2">
+                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12 border-2 border-white shadow-md" data-alt="Admin Profile" style='background-image: url("https://ui-avatars.com/api/?name=Admin&background=ffffff&color=dc2626&bold=true");'></div>
                 <div class="flex flex-col">
-                    <h1 class="text-gray-900 dark:text-white text-base font-bold leading-normal">Project Name</h1>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">.Net Project</p>
+                    <h1 class="text-white text-lg font-bold leading-normal tracking-wider">AkademiQ</h1>
+                    <p class="text-red-200 text-xs font-medium leading-normal uppercase tracking-widest">Yönetim Paneli</p>
                 </div>
             </div>
-            <nav class="flex flex-col gap-2 pt-4">
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="#">
-                    <span class="material-symbols-outlined fill">dashboard</span>
-                    <p class="text-sm font-medium leading-normal">Dashboard</p>
+
+            <nav class="flex flex-col gap-2">
+
+                <a class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-300 @(currentController == "Dashboard" ? "bg-white/20 border-l-4 border-white font-bold shadow-lg" : "hover:bg-white/10 hover:translate-x-1 text-red-100 hover:text-white")" href="/Admin/Dashboard/Index">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <p class="text-sm leading-normal">Dashboard</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10" href="/Category/Index">
+
+                <a class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-300 @(currentController == "Category" ? "bg-white/20 border-l-4 border-white font-bold shadow-lg" : "hover:bg-white/10 hover:translate-x-1 text-red-100 hover:text-white")" href="/Category/Index">
                     <span class="material-symbols-outlined">list</span>
-                    <p class="text-sm font-medium leading-normal">Kategoriler</p>
+                    <p class="text-sm leading-normal">Kategoriler</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10" href="/Admin/Product/Index">
+
+                <a class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-300 @(currentController == "Product" ? "bg-white/20 border-l-4 border-white font-bold shadow-lg" : "hover:bg-white/10 hover:translate-x-1 text-red-100 hover:text-white")" href="/Admin/Product/Index">
                     <span class="material-symbols-outlined">bar_chart</span>
-                    <p class="text-sm font-medium leading-normal">Ürünler</p>
+                    <p class="text-sm leading-normal">Ürünler</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10" href="#">
+
+                <a class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-300 @(currentController == "Banner" ? "bg-white/20 border-l-4 border-white font-bold shadow-lg" : "hover:bg-white/10 hover:translate-x-1 text-red-100 hover:text-white")" href="/Admin/Banner/Index">
+                    <span class="material-symbols-outlined">view_carousel</span>
+                    <p class="text-sm leading-normal">Bannerlar</p>
+                </a>
+
+                <a class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-300 @(currentController == "Settings" ? "bg-white/20 border-l-4 border-white font-bold shadow-lg" : "hover:bg-white/10 hover:translate-x-1 text-red-100 hover:text-white")" href="#">
                     <span class="material-symbols-outlined">settings</span>
-                    <p class="text-sm font-medium leading-normal">Ayarlar</p>
-                </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10" href="/Login/Logout">
-                    <span class="material-symbols-outlined">logout</span>
-                    <p class="text-sm font-medium leading-normal">Çıkış Yap</p>
+                    <p class="text-sm leading-normal">Ayarlar</p>
                 </a>
             </nav>
+        </div>
+
+        <div class="border-t border-red-400/30 pt-4 mt-4">
+            <a class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-300 hover:bg-red-950/40 text-red-200 hover:text-white" href="/Login/Logout">
+                <span class="material-symbols-outlined">logout</span>
+                <p class="text-sm font-bold leading-normal">Çıkış Yap</p>
+            </a>
         </div>
     </div>
 </aside>
