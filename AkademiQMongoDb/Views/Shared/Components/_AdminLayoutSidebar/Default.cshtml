@@ -1,8 +1,7 @@
 ﻿@{
-    // Burası sihirli kısım: Hangi sayfada olduğumuzu (Controller adını) otomatik yakalar
+    
     var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
 }
-
 <aside class="flex w-64 flex-col bg-gradient-to-b from-red-600 to-red-900 text-white shadow-2xl h-screen sticky top-0">
     <div class="flex h-full min-h-0 flex-col justify-between p-4">
         <div class="flex flex-col gap-4">
@@ -35,6 +34,11 @@
                 <a class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-300 @(currentController == "Banner" ? "bg-white/20 border-l-4 border-white font-bold shadow-lg" : "hover:bg-white/10 hover:translate-x-1 text-red-100 hover:text-white")" href="/Admin/Banner/Index">
                     <span class="material-symbols-outlined">view_carousel</span>
                     <p class="text-sm leading-normal">Bannerlar</p>
+                </a>
+
+                <a class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-300 @(currentController == "Chef" ? "bg-white/20 border-l-4 border-white font-bold shadow-lg" : "hover:bg-white/10 hover:translate-x-1 text-red-100 hover:text-white")" href="/Admin/Chef/Index">
+                    <span class="material-symbols-outlined">restaurant</span>
+                    <p class="text-sm leading-normal">Şeflerimiz</p>
                 </a>
 
                 <a class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-300 @(currentController == "Settings" ? "bg-white/20 border-l-4 border-white font-bold shadow-lg" : "hover:bg-white/10 hover:translate-x-1 text-red-100 hover:text-white")" href="#">
