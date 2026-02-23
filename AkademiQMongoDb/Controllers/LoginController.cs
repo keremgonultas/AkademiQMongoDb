@@ -56,7 +56,7 @@ namespace AkademiQMongoDb.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Remove("Username");
-            return RedirectToAction("Index/Default");
+            return RedirectToAction("Index","Default");
         }
 
     }

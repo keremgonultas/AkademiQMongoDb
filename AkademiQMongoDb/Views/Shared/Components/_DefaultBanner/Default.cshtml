@@ -1,0 +1,44 @@
+﻿@model List<ResultBannerDto>
+
+<div class="banner-area banner-style-six navigation-circle bg-dark text-light overflow-hidden bg-dark bg-cover" style="background-image: url('/UI/assets/img/shape/14.jpg');">
+    <div class="banner-fade swiper">
+        <div class="swiper-wrapper">
+
+            @if (Model != null)
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="swiper-slide">
+                        <div class="container">
+                            <div class="content">
+                                <div class="row align-center">
+                                    <div class="col-lg-6">
+                                        <h4>Özel Lezzetler</h4>
+                                        <h2>@item.Title</h2>
+                                        <p>@item.Description</p>
+                                        <div class="button mt-40">
+                                            <a class="btn btn-theme btn-md animation" href="/FoodMenu/Index">Menüyü Keşfet</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="thumb">
+                                            <img src="@item.ImageUrl" alt="@item.Title" style="max-height: 500px; object-fit: contain;">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+        </div>
+
+        <div class="swiper-nav-left">
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+
+    </div>
+</div>
