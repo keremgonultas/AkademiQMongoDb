@@ -9,38 +9,44 @@ using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// 1. Veritabanı Ayarları
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection(nameof(DatabaseSettings)));
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IBannerService, BannerService>();
-builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddSingleton<IDatabaseSettings>(sp =>
 {
     return sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
 });
 
+// 2. Servis Bağlantıları (Dependency Injection)
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IBannerService, BannerService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
+// 3. MVC ve Global Güvenlik Ayarları (Her sayfa için Login zorunluluğu)
 builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add(new AuthorizeFilter());
 });
 
+// 4. SEPET İÇİN EKLENEN KISIM: Hafıza (Cache) ve Session Ayarları
+builder.Services.AddDistributedMemoryCache(); // Session'ın kullanacağı RAM alanını açar
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Sepet süresi 30 dk
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(config =>
-{
-    config.LoginPath = "/Login/Signin";
-    config.LogoutPath = "/Login/Logout";
-    config.Cookie.Name = "FooduAppCookie";
-    config.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-    config.SlidingExpiration = true;
-});
+// 5. Kimlik Doğrulama (Cookie Auth) Ayarları
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(config =>
+    {
+        config.LoginPath = "/Login/Signin";
+        config.LogoutPath = "/Login/Logout";
+        config.Cookie.Name = "FooduAppCookie";
+        config.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        config.SlidingExpiration = true;
+    });
 
 var app = builder.Build();
 
@@ -52,27 +58,21 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseSession(); // Sepet hafızasını devreye alıyoruz
 
-app.UseSession();
-
-
-
+// Rotalar
 app.MapControllerRoute(
     name: "areas",
-    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-);
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
 
 app.Run();

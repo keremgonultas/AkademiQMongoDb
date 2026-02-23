@@ -1,4 +1,6 @@
-﻿<header>
+﻿@model List<AkademiQMongoDb.DTOs.CartItem>
+
+<header>
     <nav class="navbar mobile-sidenav navbar-sticky navbar-default validnavs navbar-fixed dark" style="background-color: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
 
         <div class="top-search">
@@ -10,6 +12,7 @@
                 </div>
             </div>
         </div>
+
         <div class="container-full d-flex justify-content-between align-items-center">
 
             <div class="navbar-header">
@@ -21,8 +24,8 @@
                     <img src="/UI/assets/img/logo.png" class="logo logo-scrolled" alt="Logo">
                 </a>
             </div>
-            <div class="collapse navbar-collapse" id="navbar-menu">
 
+            <div class="collapse navbar-collapse" id="navbar-menu">
                 <img src="/UI/assets/img/logo.png" alt="Logo">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                     <i class="fa fa-times"></i>
@@ -37,19 +40,77 @@
                     <li><a href="/Contact/Index">İletişim</a></li>
                     <li><a href="/Reservation/Index">Rezervasyon</a></li>
                 </ul>
-            </div><div class="attr-right">
+            </div>
+
+            <div class="attr-right">
                 <div class="attr-nav attr-box">
                     <ul>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="far fa-shopping-cart"></i>
-                                <span class="badge">0</span>
+                            <a href="/Cart/Index" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fas fa-shopping-cart" style="font-size: 1.2rem;"></i>
+                                <span class="badge" style="background-color: #e60000; color: white;">@ViewBag.CartCount</span>
                             </a>
-                            <ul class="dropdown-menu cart-list">
-                                <li class="total">
-                                    <span class="pull-right"><strong>Toplam</strong>: 0.00 ₺</span>
-                                    <a href="/Cart/Index" class="btn btn-default btn-cart">Sepete Git</a>
-                                </li>
+
+                            <ul class="dropdown-menu cart-list" style="width: 320px; padding: 0; box-shadow: 0 15px 40px rgba(0,0,0,0.3); border-radius: 12px; border: none; background-color: #0a2229; margin-top: 20px; overflow: hidden;">
+
+                                @if (Model != null && Model.Count > 0)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <li style="padding: 15px 20px; border-bottom: 1px solid #163640; display: flex; align-items: center; background-color: #0a2229;">
+                                            <img src="@item.ImageUrl" alt="@item.ProductName" style="width: 55px; height: 55px; object-fit: cover; border-radius: 8px; margin-right: 15px; border: 1px solid #163640;">
+                                            <div style="flex-grow: 1;">
+                                                <h6 style="margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 700; color: #ffffff;">@item.ProductName</h6>
+                                                <span style="font-size: 0.85rem; color: #8fa8b0;">@item.Quantity Adet x <span style="color: #ef4444; font-weight: 700;">@item.Price ₺</span></span>
+                                            </div>
+                                        </li>
+                                    }
+
+                                    <style>
+                                        .my-super-cart-btn {
+                                            background-color: #ffffff !important;
+                                            color: #0a2229 !important;
+                                            border: none !important;
+                                            display: block !important;
+                                            text-align: center !important;
+                                            padding: 12px !important;
+                                            border-radius: 8px !important;
+                                            font-weight: 900 !important;
+                                            margin-bottom: 10px !important;
+                                            transition: all 0.3s ease-in-out !important;
+                                            text-decoration: none !important;
+                                        }
+
+                                            .my-super-cart-btn:hover,
+                                            .my-super-cart-btn:focus,
+                                            .my-super-cart-btn:active {
+                                                background-color: #e60000 !important;
+                                                color: #ffffff !important;
+                                                outline: none !important;
+                                            }
+                                    </style>
+
+                                    <li class="total" style="padding: 20px 20px 25px 20px !important; background-color: #07191e !important; border-radius: 0 0 12px 12px !important; border-top: 1px solid #163640 !important;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px !important;">
+                                            <span style="font-size: 1.1rem; color: #ffffff !important;"><strong>Toplam:</strong></span>
+                                            <span style="font-size: 1.2rem; font-weight: 900; color: #ef4444 !important;">@Model.Sum(x => x.Price * x.Quantity) ₺</span>
+                                        </div>
+
+                                        <a href="/Cart/Index"
+                                           style="background-color: #ffffff !important; color: #0a2229 !important; display: block !important; text-align: center !important; padding: 12px !important; border-radius: 8px !important; font-weight: 900 !important; margin-bottom: 10px !important; text-decoration: none !important; width: 100% !important;"
+                                           onmouseover="this.style.setProperty('background-color', '#e60000', 'important'); this.style.setProperty('color', '#ffffff', 'important');"
+                                           onmouseout="this.style.setProperty('background-color', '#ffffff', 'important'); this.style.setProperty('color', '#0a2229', 'important');">
+                                            SEPETE GİT
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li style="padding: 40px 20px; text-align: center; background-color: #0a2229;">
+                                        <i class="fas fa-shopping-basket" style="font-size: 3rem; color: #163640; margin-bottom: 15px;"></i>
+                                        <p style="margin: 0; color: #8fa8b0; font-weight: 600; font-size: 1.1rem;">Sepetiniz şu an boş.</p>
+                                    </li>
+                                }
                             </ul>
                         </li>
                         <li class="side-menu">
@@ -98,6 +159,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <div class="overlay-screen"></div>
     </nav>

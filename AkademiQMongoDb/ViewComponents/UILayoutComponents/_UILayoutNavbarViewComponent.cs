@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using AkademiQMongoDb.Helpers;
+using AkademiQMongoDb.DTOs;
 
 namespace AkademiQMongoDb.ViewComponents.UILayoutComponents
 {
@@ -6,7 +8,12 @@ namespace AkademiQMongoDb.ViewComponents.UILayoutComponents
     {
         public IViewComponentResult Invoke()
         {
-            return View();
+            var cart = HttpContext.Session.GetJson<List<CartItem>>("FooduCart") ?? new List<CartItem>();
+
+            ViewBag.CartCount = cart.Sum(x => x.Quantity);
+
+           
+            return View(cart);
         }
     }
 }

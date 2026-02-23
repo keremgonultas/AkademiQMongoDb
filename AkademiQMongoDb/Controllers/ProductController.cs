@@ -1,10 +1,12 @@
 ﻿using AkademiQMongoDb.DTOs.ProductDtos;
 using AkademiQMongoDb.Services.ProductServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace AkademiQMongoDb.Controllers
 {
+    [AllowAnonymous]
     public class ProductController : Controller
     {
         private readonly IProductService _productService; 

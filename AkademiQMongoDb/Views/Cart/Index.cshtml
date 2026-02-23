@@ -1,0 +1,132 @@
+﻿@model List<AkademiQMongoDb.DTOs.CartItem>
+@{
+    ViewData["Title"] = "Sepetim";
+    Layout = "~/Views/UILayout/Layout.cshtml";
+    // Sepetteki tüm ürünlerin (Fiyat x Adet) toplamını anlık olarak hesaplıyoruz
+    decimal grandTotal = Model != null ? Model.Sum(x => x.Price * x.Quantity) : 0;
+}
+
+<div class="breadcrumb-area text-center shadow text-light" style="background: linear-gradient(to right, #111111, #4a0000); padding-top: 170px; padding-bottom: 70px; margin-bottom: 50px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <h1 style="font-size: 2.8rem; font-weight: 700; text-transform: none; margin-bottom: 10px;">Sepetim</h1>
+                <ul class="breadcrumb" style="background: transparent; padding: 0; margin: 0; display: inline-flex; justify-content: center; font-size: 1.1rem;">
+                    <li><a href="/Default/Index" style="color: #e5e7eb; text-decoration: none; transition: 0.3s;"><i class="fas fa-home"></i> Ana Sayfa</a></li>
+                    <li style="color: #9ca3af; margin: 0 12px;">/</li>
+                    <li><a href="/Product/Index" style="color: #e5e7eb; text-decoration: none; transition: 0.3s;">Menü</a></li>
+                    <li style="color: #9ca3af; margin: 0 12px;">/</li>
+                    <li class="active" style="color: #ef4444; font-weight: bold;">Sepet</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cart-area default-padding">
+    <div class="container">
+        @if (Model == null || Model.Count == 0)
+        {
+            <div class="row">
+                <div class="col-lg-12 text-center" style="padding: 50px 0;">
+                    <i class="fas fa-shopping-basket" style="font-size: 5rem; color: #e5e7eb; margin-bottom: 20px;"></i>
+                    <h3 style="font-weight: 700; color: #1f2937;">Sepetiniz şu an boş.</h3>
+                    <p style="color: #6b7280; font-size: 1.1rem; margin-bottom: 30px;">Acıkmış olmalısınız, hemen enfes menümüze göz atın!</p>
+                    <a href="/Product/Index" class="btn btn-theme" style="border-radius: 30px; padding: 12px 35px; font-weight: bold; background-color: #e60000; color: white;">Menüye Dön ve Lezzetleri Keşfet</a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+
+                <div class="col-lg-8">
+                    <div class="cart-table-wrapper" style="background: #fff; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); overflow: hidden; margin-bottom: 30px;">
+                        <table class="table" style="margin-bottom: 0; vertical-align: middle;">
+                            <thead style="background-color: #f8f9fa; border-bottom: 2px solid #e5e7eb;">
+                                <tr>
+                                    <th style="padding: 15px 20px; color: #1f2937; font-weight: 700; border: none;">Ürün</th>
+                                    <th style="padding: 15px 20px; color: #1f2937; font-weight: 700; border: none;">Fiyat</th>
+                                    <th style="padding: 15px 20px; color: #1f2937; font-weight: 700; border: none; text-align: center;">Adet</th>
+                                    <th style="padding: 15px 20px; color: #1f2937; font-weight: 700; border: none; text-align: right;">Toplam</th>
+                                    <th style="padding: 15px 20px; border: none;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr style="border-bottom: 1px solid #f1f1f1;">
+                                        <td style="padding: 20px; display: flex; align-items: center; border: none;">
+                                            <img src="@item.ImageUrl" alt="@item.ProductName" style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px; margin-right: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                                            <span style="font-weight: 700; font-size: 1.1rem; color: #1f2937;">@item.ProductName</span>
+                                        </td>
+
+                                        <td style="padding: 20px; border: none; font-weight: 600; color: #6b7280; font-size: 1.1rem;">
+                                            @item.Price ₺
+                                        </td>
+
+                                        <td style="padding: 20px; border: none; text-align: center;">
+                                            <div style="display: inline-flex; align-items: center; background: #f3f4f6; border-radius: 30px; padding: 6px 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
+
+                                                <a href="/Cart/DecreaseCartItem?id=@item.ProductId" style="width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: #ffffff; border-radius: 50%; color: #1f2937; text-decoration: none; box-shadow: 0 2px 5px rgba(0,0,0,0.08); transition: 0.3s;" onmouseover="this.style.background='#e60000'; this.style.color='white'" onmouseout="this.style.background='#ffffff'; this.style.color='#1f2937'">
+                                                    <i class="fas fa-minus" style="font-size: 0.7rem;"></i>
+                                                </a>
+
+                                                <span style="margin: 0 15px; font-weight: 800; color: #1f2937; min-width: 20px; text-align: center; font-size: 1.1rem;">@item.Quantity</span>
+
+                                                <a href="/Cart/IncreaseCartItem?id=@item.ProductId" style="width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: #ffffff; border-radius: 50%; color: #1f2937; text-decoration: none; box-shadow: 0 2px 5px rgba(0,0,0,0.08); transition: 0.3s;" onmouseover="this.style.background='#e60000'; this.style.color='white'" onmouseout="this.style.background='#ffffff'; this.style.color='#1f2937'">
+                                                    <i class="fas fa-plus" style="font-size: 0.7rem;"></i>
+                                                </a>
+
+                                            </div>
+                                        </td>
+
+                                        <td style="padding: 20px; border: none; text-align: right; font-weight: 800; color: #e60000; font-size: 1.2rem;">
+                                            @(item.Price* item.Quantity) ₺
+                                        </td>
+
+                                        <td style="padding: 20px; border: none; text-align: center;">
+                                            <a href="/Cart/RemoveCartItem?id=@item.ProductId" style="color: #ef4444; font-size: 1.2rem; transition: 0.3s;" title="Sepetten Çıkar" onmouseover="this.style.color='#b91c1c'" onmouseout="this.style.color='#ef4444'">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="order-summary" style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 15px; padding: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); position: sticky; top: 120px;">
+                        <h4 style="font-weight: 800; color: #1f2937; margin-bottom: 25px; border-bottom: 2px solid #f1f1f1; padding-bottom: 15px;">Sipariş Özeti</h4>
+
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 1.1rem; color: #6b7280;">
+                            <span>Ara Toplam</span>
+                            <span style="font-weight: 600; color: #1f2937;">@grandTotal ₺</span>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 1.1rem; color: #6b7280;">
+                            <span>Teslimat Ücreti</span>
+                            <span style="font-weight: 600; color: #10b981;">Ücretsiz</span>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; margin-top: 20px; border-top: 2px dashed #e5e7eb; padding-top: 20px; font-size: 1.4rem;">
+                            <span style="font-weight: 800; color: #1f2937;">Genel Toplam</span>
+                            <span style="font-weight: 900; color: #e60000;">@grandTotal ₺</span>
+                        </div>
+
+                        <a href="#" class="btn btn-theme w-100 mt-4" style="background-color: #e60000; color: white; border-radius: 30px; padding: 14px; font-weight: bold; font-size: 1.1rem; text-align: center; display: block; transition: 0.3s;" onmouseover="this.style.backgroundColor='#cc0000'" onmouseout="this.style.backgroundColor='#e60000'">
+                            Siparişi Tamamla <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+                        </a>
+
+                        <p style="text-align: center; color: #9ca3af; font-size: 0.85rem; margin-top: 15px; margin-bottom: 0;">
+                            <i class="fas fa-shield-alt"></i> 256-bit SSL Güvenli Ödeme
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
