@@ -1,0 +1,119 @@
+﻿@model List<AkademiQMongoDb.DTOs.ProductDtos.ResultProductDto>
+
+@{
+    ViewData["Title"] = "Menümüz";
+    Layout = "~/Views/UILayout/Layout.cshtml";
+    
+    var categories = Model != null ? Model.Select(x => x.CategoryName).Distinct().ToList() : new List<string>();
+}
+
+<div class="breadcrumb-area text-center shadow text-light" style="background: linear-gradient(to right, #111111, #4a0000); padding-top: 170px; padding-bottom: 70px; margin-bottom: 30px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <h1 style="font-size: 2.8rem; font-weight: 700; text-transform: none; margin-bottom: 10px;">Lezzet Menümüz</h1>
+                <ul class="breadcrumb" style="background: transparent; padding: 0; margin: 0; display: inline-flex; justify-content: center; font-size: 1.1rem;">
+                    <li><a href="/Default/Index" style="color: #e5e7eb; text-decoration: none; transition: 0.3s;"><i class="fas fa-home"></i> Ana Sayfa</a></li>
+                    <li style="color: #9ca3af; margin: 0 12px;">/</li>
+                    <li class="active" style="color: #ef4444; font-weight: bold;">Menü</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="food-menu-area default-padding">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="menu-filter-container" style="margin-bottom: 50px; display: flex; justify-content: center; flex-wrap: wrap; gap: 15px;">
+                    <button class="btn btn-theme active filter-btn" data-filter="all" style="border-radius: 30px; padding: 10px 30px; font-weight: bold; border: none; cursor: pointer;">Tümü</button>
+                    @foreach (var category in categories)
+                    {
+                        var filterId = category.Replace(" ", "-").ToLower();
+                        <button class="btn btn-dark filter-btn" data-filter="@filterId" style="border-radius: 30px; padding: 10px 30px; font-weight: bold; border: none; cursor: pointer;">@category</button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="menu-items-container" style="display: flex; flex-wrap: wrap;">
+            @if (Model != null)
+            {
+                @foreach (var item in Model)
+                {
+                    var filterClass = item.CategoryName.Replace(" ", "-").ToLower();
+
+                    <div class="col-lg-3 col-md-4 col-sm-6 menu-item-box @filterClass" style="margin-bottom: 30px; display: flex; flex-direction: column;">
+
+                        <div class="item" style="height: 100%; display: flex; flex-direction: column; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 15px; overflow: hidden; width: 100%; box-shadow: 0 10px 25px rgba(0,0,0,0.06); transition: all 0.3s ease;">
+
+                            <div class="thumb" style="width: 100%; height: 180px; overflow: hidden; position: relative; flex-shrink: 0;">
+                                <img src="@item.ImageUrl" alt="@item.Name" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+                            </div>
+
+                            <div class="info" style="flex-grow: 1; padding: 15px; display: flex; flex-direction: column;">
+
+                                <div style="flex-grow: 1;">
+                                    <h4 style="margin: 0 0 5px 0; font-size: 1.15rem; font-weight: 800; color: #1f2937;">@item.Name</h4>
+
+                                    <div style="margin-bottom: 10px;">
+                                        <span style="font-size: 0.8rem; color: #6b7280; font-weight: 600;">
+                                            <i class="fas fa-utensils" style="color: #e60000; margin-right: 4px;"></i> @item.CategoryName
+                                        </span>
+                                    </div>
+
+                                    <p style="margin: 0 0 15px 0; color: #6b7280; font-size: 0.85rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">@item.Description</p>
+                                </div>
+
+                                <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f1f1; padding-top: 12px;">
+
+                                    <span class="price" style="font-size: 1.25rem; font-weight: 900; color: #e60000; white-space: nowrap;">@item.Price ₺</span>
+
+                                    <a href="/Cart/AddCartItem?id=@item.Id" class="btn btn-sm" style="background-color: #e60000; color: white; border-radius: 20px; padding: 6px 16px; font-weight: 700; font-size: 0.85rem; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#cc0000'" onmouseout="this.style.backgroundColor='#e60000'">
+                                        <i class="fas fa-shopping-cart" style="margin-right: 5px;"></i> Ekle
+                                    </a>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const menuItems = document.querySelectorAll('.menu-item-box');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function () {
+                filterBtns.forEach(b => {
+                    b.classList.remove('btn-theme');
+                    b.classList.add('btn-dark');
+                });
+                this.classList.remove('btn-dark');
+                this.classList.add('btn-theme');
+
+                const filterValue = this.getAttribute('data-filter');
+
+                menuItems.forEach(item => {
+                    if (filterValue === 'all') {
+                        item.style.display = 'block';
+                    } else {
+                        if (item.classList.contains(filterValue)) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+    });
+</script>
