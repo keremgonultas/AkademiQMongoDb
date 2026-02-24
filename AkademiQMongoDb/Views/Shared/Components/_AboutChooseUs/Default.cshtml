@@ -1,0 +1,67 @@
+﻿@model AkademiQMongoDb.DTOs.AboutDTOs.ResultAboutDto
+
+@if (Model != null)
+{
+    <div class="choose-us-style-one-area default-padding-bottom bg-gray">
+        <div class="container">
+            <div class="choose-us-style-one-items">
+                <div class="row align-center">
+                    <div class="col-xl-6 choose-us-style-one-info">
+                        <h2 class="title split-text">Yemeğinizin Tadını Doyasıya Çıkarın</h2>
+                        <p class="split-text">
+                            Dünyanın ilk restoran konseptinden ilham alarak, size sadece bir karın doyurma molası değil, unutulmaz bir gastronomi deneyimi sunuyoruz. Taze malzemeler, usta eller ve sıcak bir atmosfer...
+                        </p>
+                        <ul class="list-style-one">
+                            <li>Yemeklerimiz inanılmaz lezzetli</li>
+                            <li>Atmosferimiz mükemmel</li>
+                            <li>Eşsiz tarifler sunuyoruz</li>
+                        </ul>
+                        <a class="btn btn-theme btn-md animation mt-30" href="/Menu/Index">Masa Ayırtın</a>
+                    </div>
+                    <div class="col-xl-6 text-light choose-us-style-one-content">
+                        <div class="choose-us-style-one-item bg-cover bg-theme" style="background-image: url(/UI/assets/img/shape/7.jpg);">
+                            <div class="fun-fact-style-one text-center">
+                                <div class="icon">
+                                    <img src="/UI/assets/img/icon/12.png" alt="Icon">
+                                </div>
+                                <div class="counter">
+                                    <div class="timer" data-to="500" data-speed="2000">500</div>
+                                    <div class="operator">+</div>
+                                </div>
+                                <span class="medium">Menü ve Yemek Çeşidi</span>
+                            </div>
+                        </div>
+                        <div class="choose-us-style-one-item">
+                            <div class="thumb">
+                                <img src="/UI/assets/img/thumb/4.jpg" alt="Thumb">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="shape">
+                    <img src="/UI/assets/img/shape/24.png" alt="Shape">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="video-bg-area text-center text-light video-bg-live bg-fixed" style="background-image: url(/UI/assets/img/banner/3.jpg);">
+
+        <div class="player" data-property="{videoURL:'@Model.VideoUrl',containment:'.video-bg-live', showControls:false, autoPlay:true, zoom:0, loop:true, mute:true, startAt:5, opacity:1, quality:'default'}"></div>
+
+        <div class="video-bg-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <h2 class="title split-text">Her Zaman Sıcak ve Lezzetli Yemekler Sunuyoruz</h2>
+                        <a class="btn btn-theme btn-md animation mt-30" href="#">Masa Ayırtın</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wavesshape">
+            <img src="/UI/assets/img/shape/6.png" alt="Shape">
+        </div>
+    </div>
+}

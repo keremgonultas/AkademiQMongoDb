@@ -1,0 +1,50 @@
+﻿@model List<AkademiQMongoDb.DTOs.TestimonialDTOs.ResultTestimonialDto>
+
+@if (Model != null && Model.Count > 0)
+{
+    <div class="testimonial-style-one-area default-padding bg-gray bg-cover text-center" style="background-image: url(/UI/assets/img/shape/4.jpg);">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <div class="testimonial-style-one-carousel swiper">
+                        <div class="swiper-wrapper">
+
+                            @foreach (var item in Model)
+                            {
+                                <div class="swiper-slide">
+                                    <div class="testimonial-style-one">
+                                        <div class="item">
+                                            <div class="content">
+                                                <div class="tm-review">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                                <div class="provider">
+                                                    <h4>@item.Title</h4>
+                                                </div>
+                                                <p>
+                                                    "@item.Comment"
+                                                </p>
+                                                <div class="tm-proivder-thumb">
+                                                    <img src="@item.FoodImageUrl" alt="Yemek">
+                                                    <img src="@item.ImageUrl" alt="Müşteri">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="testimonial-pagination">
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

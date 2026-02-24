@@ -8,24 +8,22 @@ namespace AkademiQMongoDb.Services.CategoryServices
 {
     public class CategoryService : ICategoryService
     {
-
         private readonly IMongoCollection<Category> _categoryCollection;
 
         public CategoryService(IDatabaseSettings databaseSettings)
         {
             var client = new MongoClient(databaseSettings.ConnectionString);
-
             var database = client.GetDatabase(databaseSettings.DatabaseName);
-            
+
             _categoryCollection = database.GetCollection<Category>(databaseSettings.CategoryCollectionName);
         }
-        
-        
+
         public async Task CreateAsync(CreateCategoryDto categoryDto)
         {
             var category = new Category
             {
                 Name = categoryDto.Name,
+                ImageUrl = categoryDto.ImageUrl 
             };
 
             await _categoryCollection.InsertOneAsync(category);
@@ -33,29 +31,30 @@ namespace AkademiQMongoDb.Services.CategoryServices
 
         public async Task DeleteAsync(string id)
         {
-            await _categoryCollection.DeleteOneAsync(x=>x.Id==id);
+            await _categoryCollection.DeleteOneAsync(x => x.Id == id);
         }
 
         public async Task<List<ResultCategoryDto>> GetAllAsync()
         {
             var categories = await _categoryCollection.AsQueryable().ToListAsync();
 
-            return categories.Select(c=> new ResultCategoryDto
+            return categories.Select(c => new ResultCategoryDto
             {
                 Id = c.Id,
-                Name = c.Name
+                Name = c.Name,
+                ImageUrl = c.ImageUrl 
             }).ToList();
         }
 
         public async Task<UpdateCategoryDto> GetByIdAsync(string id)
         {
-            var category = await _categoryCollection.Find(x=>x.Id== id).FirstOrDefaultAsync();
+            var category = await _categoryCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
             return new UpdateCategoryDto
-            { 
-                Id = category.Id, 
-                Name = category.Name 
-            
+            {
+                Id = category.Id,
+                Name = category.Name,
+                ImageUrl = category.ImageUrl 
             };
         }
 
@@ -64,13 +63,11 @@ namespace AkademiQMongoDb.Services.CategoryServices
             var category = new Category
             {
                 Id = categoryDto.Id,
-                Name = categoryDto.Name
+                Name = categoryDto.Name,
+                ImageUrl = categoryDto.ImageUrl 
             };
 
             await _categoryCollection.FindOneAndReplaceAsync(x => x.Id == category.Id, category);
-            
         }
-
-        
     }
 }

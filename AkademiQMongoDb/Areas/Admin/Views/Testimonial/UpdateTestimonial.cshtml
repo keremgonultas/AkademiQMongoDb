@@ -1,0 +1,41 @@
+﻿@model AkademiQMongoDb.DTOs.TestimonialDTOs.UpdateTestimonialDto
+
+@{
+    ViewData["Title"] = "Yorum Güncelle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header"><div class="card-title">Müşteri Yorumunu Güncelle</div></div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label>Yorum Başlığı</label>
+                    <input type="text" class="form-control" asp-for="Title" required>
+                </div>
+                <div class="form-group">
+                    <label>Müşteri Yorumu</label>
+                    <textarea class="form-control" rows="4" asp-for="Comment" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Müşteri Fotoğrafı (URL)</label>
+                    <input type="text" class="form-control" asp-for="ImageUrl" required>
+                </div>
+                <div class="form-group">
+                    <label>Yediği Yemeğin Fotoğrafı (URL)</label>
+                    <input type="text" class="form-control" asp-for="FoodImageUrl" required>
+                </div>
+                <div class="form-group">
+                    <label>Sitede Yayınlansın mı?</label>
+                    <select class="form-control" asp-for="Status">
+                        <option value="true">Evet, Yayınla (Aktif)</option>
+                        <option value="false">Hayır, Gizle (Pasif)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success mt-3">Değişiklikleri Kaydet</button>
+            </form>
+        </div>
+    </div>
+</div>

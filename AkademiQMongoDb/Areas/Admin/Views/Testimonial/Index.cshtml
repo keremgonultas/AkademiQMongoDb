@@ -1,0 +1,67 @@
+﻿@model List<AkademiQMongoDb.DTOs.TestimonialDTOs.ResultTestimonialDto>
+
+@{
+    ViewData["Title"] = "Müşteri Yorumları";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml"; // Kendi yoluna göre düzelt!
+}
+
+<div class="container-fluid">
+    <h4 class="page-title">Müşteri Yorumları İşlemleri</h4>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Yorum Listesi</div>
+                </div>
+                <div class="card-body">
+                    <a href="/Admin/Testimonial/CreateTestimonial" class="btn btn-primary mb-3">Yeni Yorum Ekle</a>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover mt-3">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Müşteri Resmi</th>
+                                    <th>Yemek Resmi</th>
+                                    <th>Başlık</th>
+                                    <th>Durum</th>
+                                    <th>Sil</th>
+                                    <th>Güncelle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <img src="@item.ImageUrl" alt="Müşteri" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                                        </td>
+                                        <td>
+                                            <img src="@item.FoodImageUrl" alt="Yemek" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                                        </td>
+                                        <td class="align-middle">@item.Title</td>
+                                        <td class="align-middle">
+                                            @if (item.Status)
+                                            {
+                                                <span style="background-color: #10b981; color: #ffffff; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; display: inline-block;">Aktif</span>
+                                            }
+                                            else
+                                            {
+                                                <span style="background-color: #ef4444; color: #ffffff; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; display: inline-block;">Pasif</span>
+                                            }
+                                        </td>
+                                        <td class="align-middle">
+                                            <a href="/Admin/Testimonial/DeleteTestimonial/@item.Id" class="btn btn-danger btn-sm" onclick="return confirm('Silmek istediğinize emin misiniz?');">Sil</a>
+                                        </td>
+                                        <td class="align-middle">
+                                            <a href="/Admin/Testimonial/UpdateTestimonial/@item.Id" class="btn btn-success btn-sm">Güncelle</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
