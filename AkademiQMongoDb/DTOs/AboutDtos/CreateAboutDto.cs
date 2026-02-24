@@ -1,11 +1,6 @@
-﻿using AkademiQMongoDb.Entities.Common;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-
-namespace AkademiQMongoDb.Entities
+﻿namespace AkademiQMongoDb.DTOs.AboutDTOs
 {
-    [BsonIgnoreExtraElements]
-    public class About : BaseEntity
+    public class CreateAboutDto
     {
         public string SubTitle { get; set; }
         public string Title { get; set; }

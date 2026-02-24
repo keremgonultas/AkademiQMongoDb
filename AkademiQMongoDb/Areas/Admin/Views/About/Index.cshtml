@@ -1,0 +1,54 @@
+﻿@model List<AkademiQMongoDb.DTOs.AboutDTOs.ResultAboutDto>
+
+@{
+    ViewData["Title"] = "Hakkımızda İşlemleri";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml"; // Kendi yoluna göre düzelt!
+}
+
+<div class="container-fluid">
+    <h4 class="page-title">Hakkımızda İşlemleri</h4>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Hakkımızda Metinleri</div>
+                </div>
+                <div class="card-body">
+                    <a href="/Admin/About/CreateAbout" class="btn btn-primary mb-3">Yeni Hakkımızda Yazısı Ekle</a>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover mt-3">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Görsel</th>
+                                    <th>Üst Başlık (SubTitle)</th>
+                                    <th>Ana Başlık (Title)</th>
+                                    <th>Sil</th>
+                                    <th>Güncelle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <img src="@item.ImageUrl" alt="@item.Title" style="width: 80px; height: 60px; object-fit: cover; border-radius: 5px;">
+                                        </td>
+                                        <td class="align-middle">@item.SubTitle</td>
+                                        <td class="align-middle">@item.Title</td>
+                                        <td class="align-middle">
+                                            <a href="/Admin/About/DeleteAbout/@item.Id" class="btn btn-danger btn-sm" onclick="return confirm('Silmek istediğinize emin misiniz?');">Sil</a>
+                                        </td>
+                                        <td class="align-middle">
+                                            <a href="/Admin/About/UpdateAbout/@item.Id" class="btn btn-success btn-sm">Güncelle</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

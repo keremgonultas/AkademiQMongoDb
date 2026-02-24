@@ -1,0 +1,47 @@
+﻿@model AkademiQMongoDb.DTOs.AboutDTOs.UpdateAboutDto
+
+@{
+    ViewData["Title"] = "Yazı Güncelle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml"; // Kendi yoluna göre düzelt!
+}
+
+<div class="container-fluid">
+    <h4 class="page-title">Hakkımızda İşlemleri</h4>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Hakkımızda Yazısını Güncelle</div>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="form-group">
+                            <label>Üst Başlık (SubTitle)</label>
+                            <input type="text" class="form-control" asp-for="SubTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Ana Başlık (Title)</label>
+                            <input type="text" class="form-control" asp-for="Title" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Açıklama / Metin</label>
+                            <textarea class="form-control" rows="5" asp-for="Description" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Görsel Linki (ImageUrl)</label>
+                            <input type="text" class="form-control" asp-for="ImageUrl" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Video Linki (Youtube URL vb.)</label>
+                            <input type="text" class="form-control" asp-for="VideoUrl">
+                        </div>
+                        <button type="submit" class="btn btn-success mt-3">Değişiklikleri Kaydet</button>
+                        <a href="/Admin/About/Index" class="btn btn-danger mt-3 ml-2">İptal</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,3 +1,4 @@
+using AkademiQMongoDb.Services.AboutServices;
 using AkademiQMongoDb.Services.AdminServices;
 using AkademiQMongoDb.Services.BannerServices;
 using AkademiQMongoDb.Services.CategoryServices;
@@ -23,6 +24,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IBannerService, BannerService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IChefService, ChefService>();
+builder.Services.AddScoped<IAboutService, AboutService>();
 
 // 3. MVC ve Global Güvenlik Ayarları (Her sayfa için Login zorunluluğu)
 builder.Services.AddControllersWithViews(options =>

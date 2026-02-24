@@ -1,0 +1,51 @@
+﻿@model AkademiQMongoDb.DTOs.AboutDTOs.ResultAboutDto
+
+@if (Model != null)
+{
+    <div class="about-style-two-area default-padding">
+        <div class="container">
+            <div class="row align-center">
+
+                <div class="col-lg-6">
+                    <div class="thumb-style-two wow fadeInUp">
+                        <img src="@Model.ImageUrl" alt="@Model.Title">
+                    </div>
+                </div>
+
+                <div class="col-lg-5 offset-lg-1">
+                    <div class="about-style-two-info">
+
+                        <h4 class="sub-heading">@Model.SubTitle</h4>
+
+                        <h2 class="title split-text">@Model.Title</h2>
+
+                        <p class="split-text">
+                            @Model.Description
+                        </p>
+
+                        <a class="btn btn-theme btn-md animation" href="/Product/Index">Menüyü Keşfet</a>
+
+                        <ul class="launch-time">
+                            <li class="wow fadeInUp">
+                                <h4>Öğle Yemeği Servisi</h4>
+                                <ul>
+                                    <li>Cumartesi ve Pazar</li>
+                                    <li>12:00 - 13:30 arası rezervasyon</li>
+                                </ul>
+                            </li>
+                            <li class="wow fadeInUp">
+                                <h4>Akşam Yemeği Servisi</h4>
+                                <ul>
+                                    <li>Perşembe - Pazar</li>
+                                    <li>18:00 - 20:45 arası rezervasyon</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
