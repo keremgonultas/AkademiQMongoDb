@@ -52,7 +52,15 @@ namespace AkademiQMongoDb.Services.BlogServices
 
         public async Task<UpdateBlogDto> GetByIdAsync(string id)
         {
+           
             var value = await _blogCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+
+            
+            if (value == null)
+            {
+                return null;
+            }
+
             return new UpdateBlogDto
             {
                 Id = value.Id,

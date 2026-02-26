@@ -14,18 +14,31 @@ namespace AkademiQMongoDb.Controllers
             _blogService = blogService;
         }
 
-        // Ana Blog Listesi
+        
         public async Task<IActionResult> Index()
         {
             var values = await _blogService.GetAllAsync();
             return View(values);
         }
 
-        // Blog Detay Sayfası
+        
         public async Task<IActionResult> BlogDetail(string id)
         {
+           
+            if (string.IsNullOrEmpty(id))
+            {
+                return RedirectToAction("Index");
+            }
+
             var value = await _blogService.GetByIdAsync(id);
-            return View(value); // Sadece o blogun verisini View'a gönderiyoruz
+
+            
+            if (value == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(value);
         }
     }
 }

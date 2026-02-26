@@ -1,0 +1,115 @@
+﻿@model AkademiQMongoDb.DTOs.BlogDtos.UpdateBlogDto
+@{
+    ViewData["Title"] = "Blog Detayı";
+    Layout = "~/Views/UILayout/Layout.cshtml"; 
+}
+
+<div class="breadcrumb-area text-center shadow text-light" style="background: linear-gradient(to right, #111111, #4a0000); padding-top: 170px; padding-bottom: 70px; margin-bottom: 50px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <h1 style="font-size: 2.8rem; font-weight: 700; text-transform: none; margin-bottom: 10px;">Blog Detayı</h1>
+                <ul class="breadcrumb" style="background: transparent; padding: 0; margin: 0; display: inline-flex; justify-content: center; font-size: 1.1rem;">
+                    <li><a href="/Default/Index" style="color: #e5e7eb; text-decoration: none; transition: 0.3s;"><i class="fas fa-home"></i> Ana Sayfa</a></li>
+                    <li><a href="/Blog/Index">Blog</a></li>
+                    <li>@Model.Title</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="blog-area single full-blog full-blog default-padding">
+    <div class="container">
+        <div class="blog-items">
+            <div class="row">
+                <div class="blog-content wow fadeInUp col-lg-10 offset-lg-1 col-md-12">
+
+                    <div class="blog-style-two item">
+                        <div class="blog-item-box">
+                            <div class="thumb">
+                                <a href="#"><img src="@Model.ImageUrl" alt="@Model.Title"></a>
+                            </div>
+                            <div class="info">
+                                <div class="meta">
+                                    <ul>
+                                        <li>
+                                            <a href="#"><i class="fas fa-calendar-alt"></i> @Model.Date</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="fas fa-user-circle"></i> @Model.Author</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <h3>@Model.Title</h3>
+
+                                <p>
+                                    @Model.Description
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="post-author">
+                        <div class="thumb">
+                            <img src="/UI/assets/img/team/13.jpg" alt="Author">
+                        </div>
+                        <div class="info">
+                            <h4><a href="#">@Model.Author</a></h4>
+                            <p>
+                                Bu içerik değerli yazarımız @Model.Author tarafından hazırlanmıştır. Menümüz, yeni tariflerimiz ve restoranımızla ilgili en güncel haberleri takip etmeye devam edin.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="post-tags share">
+                        <div class="tags">
+                            <h4>Etiketler: </h4>
+                            <a href="#">Yemek</a>
+                            <a href="#">Tarifler</a>
+                        </div>
+
+                        <div class="social">
+                            <h4>Paylaş:</h4>
+                            <ul>
+                                <li><a class="facebook" href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a class="twitter" href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                                <li><a class="linkedin" href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="blog-comments">
+                        <div class="comments-area">
+                            <div class="comments-form">
+                                <div class="title">
+                                    <h3>Bir Yorum Bırakın</h3>
+                                </div>
+                                <form action="#" class="contact-comments">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input name="name" class="form-control" placeholder="Adınız *" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input name="email" class="form-control" placeholder="E-posta *" type="email">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group comments">
+                                                <textarea class="form-control" placeholder="Yorumunuz"></textarea>
+                                            </div>
+                                            <div class="form-group full-width submit">
+                                                <button class="btn btn-theme effect" type="submit">Yorumu Gönder</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
