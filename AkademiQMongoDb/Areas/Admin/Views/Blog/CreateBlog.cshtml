@@ -1,0 +1,35 @@
+﻿@model AkademiQMongoDb.DTOs.BlogDtos.CreateBlogDto
+@{
+    ViewData["Title"] = "Yeni Blog Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header"><div class="card-title">Yeni Blog Yazısı Ekle</div></div>
+        <div class="card-body">
+            <form method="post">
+                <div class="form-group">
+                    <label>Yazı Başlığı</label>
+                    <input type="text" class="form-control" asp-for="Title" required>
+                </div>
+                <div class="form-group">
+                    <label>Yazar (Örn: Admin, Şef Ahmet)</label>
+                    <input type="text" class="form-control" asp-for="Author" required>
+                </div>
+                <div class="form-group">
+                    <label>Tarih (Örn: 12 August, 2026)</label>
+                    <input type="text" class="form-control" asp-for="Date" required>
+                </div>
+                <div class="form-group">
+                    <label>Blog Görseli (URL)</label>
+                    <input type="text" class="form-control" asp-for="ImageUrl" required>
+                </div>
+                <div class="form-group">
+                    <label>İçerik / Açıklama</label>
+                    <textarea class="form-control" rows="5" asp-for="Description" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Kaydet</button>
+            </form>
+        </div>
+    </div>
+</div>

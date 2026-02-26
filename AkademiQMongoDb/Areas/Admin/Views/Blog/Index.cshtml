@@ -1,0 +1,43 @@
+﻿@model List<AkademiQMongoDb.DTOs.BlogDtos.ResultBlogDto>
+@{
+    ViewData["Title"] = "Blog Yazıları";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+<div class="container-fluid">
+    <h4 class="page-title">Blog İşlemleri</h4>
+    <div class="card">
+        <div class="card-header"><div class="card-title">Blog Listesi</div></div>
+        <div class="card-body">
+            <a href="/Admin/Blog/CreateBlog" class="btn btn-primary mb-3">Yeni Blog Yazısı Ekle</a>
+            <table class="table table-bordered table-hover mt-3">
+                <thead class="thead-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Görsel</th>
+                        <th>Başlık</th>
+                        <th>Yazar</th>
+                        <th>Tarih</th>
+                        <th>Sil</th>
+                        <th>Güncelle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <tr>
+                            <td class="align-middle">@count</td>
+                            <td><img src="@item.ImageUrl" alt="@item.Title" style="width: 80px; height: 50px; object-fit: cover; border-radius: 4px;"></td>
+                            <td class="align-middle">@item.Title</td>
+                            <td class="align-middle">@item.Author</td>
+                            <td class="align-middle">@item.Date</td>
+                            <td class="align-middle"><a href="/Admin/Blog/DeleteBlog/@item.Id" class="btn btn-danger btn-sm" onclick="return confirm('Silmek istediğinize emin misiniz?');">Sil</a></td>
+                            <td class="align-middle"><a href="/Admin/Blog/UpdateBlog/@item.Id" class="btn btn-success btn-sm">Güncelle</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

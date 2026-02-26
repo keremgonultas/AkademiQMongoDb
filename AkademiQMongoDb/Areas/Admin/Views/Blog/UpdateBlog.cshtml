@@ -1,0 +1,36 @@
+﻿@model AkademiQMongoDb.DTOs.BlogDtos.UpdateBlogDto
+@{
+    ViewData["Title"] = "Blog Güncelle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header"><div class="card-title">Blog Yazısını Güncelle</div></div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label>Yazı Başlığı</label>
+                    <input type="text" class="form-control" asp-for="Title" required>
+                </div>
+                <div class="form-group">
+                    <label>Yazar</label>
+                    <input type="text" class="form-control" asp-for="Author" required>
+                </div>
+                <div class="form-group">
+                    <label>Tarih</label>
+                    <input type="text" class="form-control" asp-for="Date" required>
+                </div>
+                <div class="form-group">
+                    <label>Blog Görseli (URL)</label>
+                    <input type="text" class="form-control" asp-for="ImageUrl" required>
+                </div>
+                <div class="form-group">
+                    <label>İçerik / Açıklama</label>
+                    <textarea class="form-control" rows="5" asp-for="Description" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-success mt-3">Güncelle</button>
+            </form>
+        </div>
+    </div>
+</div>
