@@ -1,12 +1,13 @@
-﻿using AkademiQMongoDb.Entities.Common;
+﻿using System;
 
-namespace AkademiQMongoDb.Entities
+namespace AkademiQMongoDb.DTOs.ContactDtos
 {
-    public class Contact : BaseEntity
+    public class ResultContactDto
     {
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        public string Phone { get; set; } 
+        public string Phone { get; set; }
         public string Message { get; set; }
         public DateTime SendDate { get; set; }
         public bool IsRead { get; set; }
