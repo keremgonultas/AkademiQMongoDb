@@ -27,8 +27,10 @@ namespace AkademiQMongoDb.Controllers
         public async Task<IActionResult> Index(CreateContactDto createContactDto)
         {
             await _contactService.CreateAsync(createContactDto);
-            
-            return RedirectToAction("Index", "Default");
+
+            TempData["SuccessMessage"] = "Mesajınız bize ulaştı! En kısa sürede size dönüş yapacağız.";
+
+            return RedirectToAction("Index");
         }
     }
 }
