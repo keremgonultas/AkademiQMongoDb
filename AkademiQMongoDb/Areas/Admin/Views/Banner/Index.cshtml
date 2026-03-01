@@ -2,56 +2,90 @@
 
 @{
     ViewData["Title"] = "Banner Listesi";
-    
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
 }
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Banner Listesi</h3>
-                    <div class="card-tools">
-                        <a href="/Admin/Banner/CreateBanner" class="btn btn-primary">
-                            <i class="fas fa-plus"></i> Yeni Banner Ekle
-                        </a>
-                    </div>
-                </div>
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover text-nowrap">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Başlık</th>
-                                <th>Açıklama</th>
-                                <th>Görsel</th>
-                                <th>İşlemler</th>
+<div class="container-fluid p-6 bg-slate-50 min-h-screen font-sans">
+
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+        <div>
+            <h2 class="text-3xl font-extrabold text-slate-800 tracking-tight">Banner Yönetimi</h2>
+            <p class="text-slate-500 mt-1">Ana sayfada dönen büyük vitrin görsellerini ve sloganlarınızı buradan yönetebilirsiniz.</p>
+        </div>
+
+        <a href="/Admin/Banner/CreateBanner" class="group flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-5 py-2.5 rounded-xl font-semibold shadow-md shadow-purple-500/30 transition-all duration-300 hover:-translate-y-0.5">
+            <span class="material-symbols-outlined text-xl transition-transform duration-300 group-hover:rotate-90">add</span>
+            Yeni Banner Ekle
+        </a>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+
+                <thead>
+                    <tr class="bg-slate-50 border-b border-slate-100 text-slate-500 text-xs uppercase tracking-wider font-bold">
+                        <th class="py-4 px-6 w-16 text-center">#</th>
+                        <th class="py-4 px-6 w-32">Görsel</th>
+                        <th class="py-4 px-6 w-1/4">Başlık</th>
+                        <th class="py-4 px-6 hidden md:table-cell">Açıklama</th>
+                        <th class="py-4 px-6 text-right w-48">İşlemler</th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y divide-slate-100">
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            count++;
+                            <tr class="hover:bg-slate-50 transition-colors duration-200 group">
+                                <td class="py-4 px-6 text-center text-sm font-bold text-slate-400">@count</td>
+
+                                <td class="py-4 px-6">
+                                    <div class="w-24 h-14 rounded-lg overflow-hidden shadow-sm ring-1 ring-slate-200 bg-white">
+                                        <img src="@item.ImageUrl" alt="@item.Title" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                    </div>
+                                </td>
+
+                                <td class="py-4 px-6">
+                                    <span class="text-sm font-bold text-slate-800 block truncate w-48" title="@item.Title">@item.Title</span>
+                                </td>
+
+                                <td class="py-4 px-6 hidden md:table-cell">
+                                    <p class="text-xs text-slate-500 truncate w-64 lg:w-80" title="@item.Description">@item.Description</p>
+                                </td>
+
+                                <td class="py-4 px-6">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <a href="/Admin/Banner/UpdateBanner/@item.Id" class="flex items-center gap-1 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-colors duration-300 shadow-sm">
+                                            <span class="material-symbols-outlined text-[18px]">edit</span>
+                                            <span class="text-xs font-bold hidden xl:block">Düzenle</span>
+                                        </a>
+
+                                        <a href="/Admin/Banner/DeleteBanner/@item.Id" onclick="return confirm('Bu vitrin afişini silmek istediğinize emin misiniz?')" class="flex items-center gap-1 px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-colors duration-300 shadow-sm">
+                                            <span class="material-symbols-outlined text-[18px]">delete</span>
+                                            <span class="text-xs font-bold hidden xl:block">Sil</span>
+                                        </a>
+                                    </div>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model != null)
-                            {
-                                int count = 0;
-                                foreach (var item in Model)
-                                {
-                                    count++;
-                                    <tr>
-                                        <td>@count</td>
-                                        <td>@item.Title</td>
-                                        <td>@item.Description</td>
-                                        <td><img src="@item.ImageUrl" style="width:75px; height:50px; object-fit:cover; border-radius:5px;" /></td>
-                                        <td>
-                                            <a href="/Admin/Banner/DeleteBanner/@item.Id" class="btn btn-outline-danger btn-sm">Sil</a>
-                                            <a href="/Admin/Banner/UpdateBanner/@item.Id" class="btn btn-outline-success btn-sm">Güncelle</a>
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
+                        }
+                    }
+                </tbody>
+            </table>
+
+            @if (Model == null || !Model.Any())
+            {
+                <div class="p-10 text-center flex flex-col items-center justify-center">
+                    <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4 ring-4 ring-slate-50 border border-slate-100">
+                        <span class="material-symbols-outlined text-3xl text-slate-400">view_carousel</span>
+                    </div>
+                    <p class="text-slate-500 font-medium">Sistemde henüz kayıtlı bir vitrin banner'ı bulunmuyor.</p>
                 </div>
-            </div>
+            }
+
         </div>
     </div>
 </div>

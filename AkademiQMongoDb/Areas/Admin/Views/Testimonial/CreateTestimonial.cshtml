@@ -5,36 +5,110 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="container-fluid">
-    <div class="card">
-        <div class="card-header"><div class="card-title">Yeni Müşteri Yorumu Ekle</div></div>
-        <div class="card-body">
+<div class="container-fluid p-6 bg-slate-50 min-h-screen font-sans">
+
+    <div class="mb-8">
+        <div class="flex items-center gap-3 mb-2">
+            <a href="/Admin/Testimonial/Index" class="w-10 h-10 flex items-center justify-center bg-white rounded-full border border-slate-200 text-slate-500 hover:text-amber-500 hover:border-amber-200 hover:shadow-sm transition-all duration-300">
+                <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+            </a>
+            <h2 class="text-3xl font-extrabold text-slate-800 tracking-tight">Yeni Müşteri Yorumu Ekle</h2>
+        </div>
+        <p class="text-slate-500 ml-13">Restoranınız ve yemekleriniz hakkındaki harika geri bildirimleri vitrine taşıyın.</p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 w-full overflow-hidden">
+
+        <div class="p-6 border-b border-slate-100 bg-slate-50/50">
+            <h3 class="text-lg font-bold text-slate-700 flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[18px]">reviews</span>
+                </div>
+                Yorum Bilgileri
+            </h3>
+        </div>
+
+        <div class="p-8">
             <form method="post">
-                <div class="form-group">
-                    <label>Yorum Başlığı (Örn: Hayatımda yediğim en iyi pizza!)</label>
-                    <input type="text" class="form-control" asp-for="Title" required>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div class="md:col-span-1">
+                        <label class="block text-sm font-bold text-slate-700 mb-2">
+                            Yorum Başlığı <span class="text-red-500 text-lg leading-none">*</span>
+                        </label>
+                        <div class="relative group">
+                            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 transition-colors pointer-events-none">format_quote</span>
+                            <input type="text" asp-for="Title" class="w-full h-12 pl-12 pr-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 focus:bg-white transition-all duration-300" placeholder="Örn: Hayatımda yediğim en iyi pizza!" required>
+                        </div>
+                        <span class="text-xs text-red-500 mt-1 block font-medium" asp-validation-for="Title"></span>
+                    </div>
+
+                    <div class="md:col-span-1">
+                        <label class="block text-sm font-bold text-slate-700 mb-2">
+                            Sitede Yayınlansın mı? <span class="text-red-500 text-lg leading-none">*</span>
+                        </label>
+                        <div class="relative group">
+                            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 transition-colors pointer-events-none z-10">visibility</span>
+
+                            <select asp-for="Status" class="w-full h-12 pl-12 pr-10 appearance-none bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 focus:bg-white transition-all duration-300" required>
+                                <option value="true">Evet, Yayınla (Aktif)</option>
+                                <option value="false">Hayır, Gizle (Pasif)</option>
+                            </select>
+
+                            <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+                        </div>
+                        <span class="text-xs text-red-500 mt-1 block font-medium" asp-validation-for="Status"></span>
+                    </div>
+
+                    <div class="md:col-span-1">
+                        <label class="block text-sm font-bold text-slate-700 mb-2">
+                            Müşteri Fotoğrafı (URL) <span class="text-red-500 text-lg leading-none">*</span>
+                        </label>
+                        <div class="relative group">
+                            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 transition-colors pointer-events-none">face</span>
+                            <input type="text" asp-for="ImageUrl" class="w-full h-12 pl-12 pr-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 focus:bg-white transition-all duration-300" placeholder="Örn: /UI/assets/img/user1.jpg" required>
+                        </div>
+                        <span class="text-xs text-red-500 mt-1 block font-medium" asp-validation-for="ImageUrl"></span>
+                    </div>
+
+                    <div class="md:col-span-1">
+                        <label class="block text-sm font-bold text-slate-700 mb-2">
+                            Yediği Yemeğin Fotoğrafı (URL) <span class="text-red-500 text-lg leading-none">*</span>
+                        </label>
+                        <div class="relative group">
+                            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 transition-colors pointer-events-none">restaurant</span>
+                            <input type="text" asp-for="FoodImageUrl" class="w-full h-12 pl-12 pr-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 focus:bg-white transition-all duration-300" placeholder="Örn: /UI/assets/img/pizza.jpg" required>
+                        </div>
+                        <span class="text-xs text-red-500 mt-1 block font-medium" asp-validation-for="FoodImageUrl"></span>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-bold text-slate-700 mb-2">
+                            Müşteri Yorumu <span class="text-red-500 text-lg leading-none">*</span>
+                        </label>
+                        <div class="relative group">
+                            <span class="material-symbols-outlined absolute left-4 top-4 text-slate-400 group-focus-within:text-amber-500 transition-colors pointer-events-none">chat</span>
+                            <textarea asp-for="Comment" rows="4" class="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 focus:bg-white transition-all duration-300 resize-y" placeholder="Müşterinin bıraktığı o güzel mesajı buraya girin..." required></textarea>
+                        </div>
+                        <span class="text-xs text-red-500 mt-1 block font-medium" asp-validation-for="Comment"></span>
+                    </div>
+
                 </div>
-                <div class="form-group">
-                    <label>Müşteri Yorumu</label>
-                    <textarea class="form-control" rows="4" asp-for="Comment" required></textarea>
+
+                <div class="mt-8 flex items-center gap-3 pt-6 border-t border-slate-100">
+                    <button type="submit" class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-xl font-bold shadow-md shadow-amber-500/30 transition-all duration-300 hover:-translate-y-0.5">
+                        <span class="material-symbols-outlined text-[20px]">save</span>
+                        Yorumu Kaydet
+                    </button>
+
+                    <a href="/Admin/Testimonial/Index" class="flex items-center gap-2 bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50 px-6 py-3 rounded-xl font-bold transition-all duration-300">
+                        <span class="material-symbols-outlined text-[20px]">close</span>
+                        İptal Et
+                    </a>
                 </div>
-                <div class="form-group">
-                    <label>Müşteri Fotoğrafı (URL)</label>
-                    <input type="text" class="form-control" asp-for="ImageUrl" required>
-                </div>
-                <div class="form-group">
-                    <label>Yediği Yemeğin Fotoğrafı (URL)</label>
-                    <input type="text" class="form-control" asp-for="FoodImageUrl" required>
-                </div>
-                <div class="form-group">
-                    <label>Sitede Yayınlansın mı?</label>
-                    <select class="form-control" asp-for="Status">
-                        <option value="true">Evet, Yayınla (Aktif)</option>
-                        <option value="false">Hayır, Gizle (Pasif)</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary mt-3">Kaydet</button>
             </form>
         </div>
+
     </div>
 </div>

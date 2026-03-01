@@ -57,7 +57,7 @@
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <div class="content">
-                                <a href="mailto:iletisim@akademiq.com">iletisim@akademiq.com</a>
+                                <a href="mailto:iletisim@foodu.com">iletisim@foodu.com</a>
                             </div>
                         </li>
                     </ul>
@@ -69,10 +69,12 @@
                     <p>
                         Yeni lezzetlerimizden ve özel kampanyalarımızdan anında haberdar olmak için e-posta listemize katılın.
                     </p>
-                    <form action="#">
-                        <input type="email" placeholder="E-posta Adresiniz" class="form-control" name="email" required>
-                        <button type="submit"> Kayıt Ol <i class="fas fa-long-arrow-right"></i></button>
+
+                    <form id="newsletterForm" onsubmit="return false;">
+                        <input type="email" id="subscriberEmailInput" placeholder="E-posta Adresiniz" class="form-control" name="email" required>
+                        <button type="button" onclick="subscribeToNewsletter()"> Kayıt Ol <i class="fas fa-long-arrow-right"></i></button>
                     </form>
+
                     <div class="footer-socila-items mt-30">
                         <h4>Sosyal Medya: </h4>
                         <ul class="footer-social">
@@ -83,7 +85,7 @@
                                 <a href="#"><i class="fab fa-instagram"></i></a>
                             </li>
                             <li>
-                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-x-twitter"></i></a>
                             </li>
                         </ul>
                     </div>
@@ -102,3 +104,56 @@
         </div>
     </div>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function subscribeToNewsletter() {
+        var emailValue = document.getElementById("subscriberEmailInput").value;
+
+        if (!emailValue) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Eksik Bilgi',
+                text: 'Lütfen abone olmak için bir e-posta adresi giriniz!',
+                confirmButtonColor: '#dc2626'
+            });
+            return;
+        }
+
+        fetch('/Subscriber/SubscribeNewsletter', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'Email=' + encodeURIComponent(emailValue)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Harika!',
+                    text: data.message,
+                    confirmButtonColor: '#16a34a'
+                });
+                document.getElementById("subscriberEmailInput").value = '';
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Hata',
+                    text: data.message,
+                    confirmButtonColor: '#dc2626'
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Hata:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Bağlantı Hatası',
+                text: 'Sunucuya bağlanılamadı, lütfen daha sonra tekrar deneyin.',
+                confirmButtonColor: '#dc2626'
+            });
+        });
+    }
+</script>

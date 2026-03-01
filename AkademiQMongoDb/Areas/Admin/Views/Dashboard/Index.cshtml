@@ -3,82 +3,231 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="container-fluid p-6 bg-gray-50 min-h-screen">
+<div class="container-fluid p-6 bg-slate-50 min-h-screen font-sans">
 
-    <div class="mb-8">
-        <h2 class="text-3xl font-bold text-gray-800">Hoş Geldiniz, Admin! 👋</h2>
-        <p class="text-gray-500 mt-1">Restoranınızın bugünkü özet durumu ve hızlı işlemler aşağıdadır.</p>
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
+        <div>
+            <h2 class="text-3xl font-extrabold text-slate-800 tracking-tight">Genel Bakış</h2>
+            <p class="text-slate-500 mt-2">Restoranınızın anlık durumunu ve istatistiklerini buradan takip edin.</p>
+        </div>
+        <div class="flex items-center gap-2 bg-white px-4 py-2.5 rounded-xl shadow-sm border border-slate-100">
+            <span class="relative flex h-3 w-3">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+            </span>
+            <span class="text-sm font-semibold text-slate-700">Sistem Aktif</span>
+        </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
 
-        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-red-600 flex items-center justify-between hover:shadow-md transition-shadow">
-            <div>
-                <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Okunmamış Mesaj</p>
-                <h3 class="text-3xl font-bold text-gray-800 mt-1">@ViewBag.UnreadMessages</h3>
-                <p class="text-xs text-gray-400 mt-1">Toplam: @ViewBag.TotalMessages mesaj</p>
+        <div class="bg-gradient-to-br from-orange-400 to-red-500 rounded-2xl p-6 text-white relative overflow-hidden shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <span class="material-symbols-outlined absolute -top-4 -right-4 text-9xl text-white opacity-10 rotate-12 select-none">lunch_dining</span>
+
+            <div class="flex justify-between items-start mb-4 relative z-10">
+                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-white/10">
+                    <span class="material-symbols-outlined text-white text-2xl">lunch_dining</span>
+                </div>
             </div>
-            <div class="p-3 bg-red-100 rounded-full text-red-600">
-                <span class="material-symbols-outlined text-3xl">mail</span>
+
+            <div class="relative z-10">
+                <h3 class="text-4xl font-extrabold mb-1 drop-shadow-sm">@ViewBag.TotalProducts</h3>
+                <p class="text-sm font-medium text-white/90">Toplam Ürün</p>
+            </div>
+
+            <div class="mt-5 pt-4 border-t border-white/20 relative z-10 flex items-center gap-2 text-xs font-medium text-white/90">
+                <span class="material-symbols-outlined text-[16px]">trending_up</span>
+                <span>Aktif Satışta</span>
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-yellow-500 flex items-center justify-between hover:shadow-md transition-shadow">
-            <div>
-                <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Bekleyen Rezervasyon</p>
-                <h3 class="text-3xl font-bold text-gray-800 mt-1">@ViewBag.PendingReservations</h3>
-                <p class="text-xs text-gray-400 mt-1">Toplam: @ViewBag.TotalReservations rezervasyon</p>
+        <div class="bg-gradient-to-br from-blue-400 to-indigo-600 rounded-2xl p-6 text-white relative overflow-hidden shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <span class="material-symbols-outlined absolute -top-4 -right-4 text-9xl text-white opacity-10 rotate-12 select-none">calendar_month</span>
+
+            <div class="flex justify-between items-start mb-4 relative z-10">
+                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-white/10">
+                    <span class="material-symbols-outlined text-white text-2xl">calendar_today</span>
+                </div>
+                @if (ViewBag.PendingReservations > 0)
+                {
+                    <span class="bg-red-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-md shadow-sm border border-red-400">@ViewBag.PendingReservations Bekleyen</span>
+                }
             </div>
-            <div class="p-3 bg-yellow-100 rounded-full text-yellow-600">
-                <span class="material-symbols-outlined text-3xl">calendar_month</span>
+
+            <div class="relative z-10">
+                <h3 class="text-4xl font-extrabold mb-1 drop-shadow-sm">@ViewBag.TotalReservations</h3>
+                <p class="text-sm font-medium text-white/90">Toplam Rezervasyon</p>
+            </div>
+
+            <div class="mt-5 pt-4 border-t border-white/20 relative z-10 flex items-center gap-2 text-xs font-medium text-white/90">
+                <span class="material-symbols-outlined text-[16px]">check_circle</span>
+                <span>Onaylılar dahil</span>
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-green-500 flex items-center justify-between hover:shadow-md transition-shadow">
-            <div>
-                <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Menüdeki Ürünler</p>
-                <h3 class="text-3xl font-bold text-gray-800 mt-1">@ViewBag.TotalProducts</h3>
-                <p class="text-xs text-green-500 mt-1 font-medium">+3 bu hafta eklendi</p>
+        <div class="bg-gradient-to-br from-fuchsia-400 to-purple-600 rounded-2xl p-6 text-white relative overflow-hidden shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <span class="material-symbols-outlined absolute -top-4 -right-4 text-9xl text-white opacity-10 rotate-12 select-none">mail</span>
+
+            <div class="flex justify-between items-start mb-4 relative z-10">
+                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-white/10">
+                    <span class="material-symbols-outlined text-white text-2xl">mail</span>
+                </div>
+                @if (ViewBag.UnreadMessages > 0)
+                {
+                    <span class="bg-yellow-400 text-yellow-900 text-[10px] font-bold px-3 py-1.5 rounded-md shadow-sm border border-yellow-300">@ViewBag.UnreadMessages Yeni</span>
+                }
             </div>
-            <div class="p-3 bg-green-100 rounded-full text-green-600">
-                <span class="material-symbols-outlined text-3xl">restaurant_menu</span>
+
+            <div class="relative z-10">
+                <h3 class="text-4xl font-extrabold mb-1 drop-shadow-sm">@ViewBag.TotalMessages</h3>
+                <p class="text-sm font-medium text-white/90">Gelen Mesaj</p>
+            </div>
+
+            <div class="mt-5 pt-4 border-t border-white/20 relative z-10 flex items-center gap-2 text-xs font-medium text-white/90">
+                <span class="material-symbols-outlined text-[16px]">mark_email_unread</span>
+                <span>Okunmamış: @ViewBag.UnreadMessages</span>
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-500 flex items-center justify-between hover:shadow-md transition-shadow">
-            <div>
-                <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Yayındaki Bloglar</p>
-                <h3 class="text-3xl font-bold text-gray-800 mt-1">@ViewBag.TotalBlogs</h3>
-                <p class="text-xs text-gray-400 mt-1">Son yazı: 2 gün önce</p>
+        <div class="bg-gradient-to-br from-emerald-400 to-teal-600 rounded-2xl p-6 text-white relative overflow-hidden shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <span class="material-symbols-outlined absolute -top-4 -right-4 text-9xl text-white opacity-10 rotate-12 select-none">article</span>
+
+            <div class="flex justify-between items-start mb-4 relative z-10">
+                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-white/10">
+                    <span class="material-symbols-outlined text-white text-2xl">rate_review</span>
+                </div>
             </div>
-            <div class="p-3 bg-blue-100 rounded-full text-blue-600">
-                <span class="material-symbols-outlined text-3xl">article</span>
+
+            <div class="relative z-10">
+                <h3 class="text-4xl font-extrabold mb-1 drop-shadow-sm">@ViewBag.TotalBlogs</h3>
+                <p class="text-sm font-medium text-white/90">Yayındaki Bloglar</p>
+            </div>
+
+            <div class="mt-5 pt-4 border-t border-white/20 relative z-10 flex items-center gap-2 text-xs font-medium text-white/90">
+                <span class="material-symbols-outlined text-[16px]">chat</span>
+                @if (ViewBag.LastBlog != null)
+                {
+                    <span class="truncate w-40" title="@ViewBag.LastBlog.Title">Son: @ViewBag.LastBlog.Title</span>
+                }
+                else
+                {
+                    <span>Henüz yazı yok</span>
+                }
             </div>
         </div>
     </div>
 
-    <h3 class="text-xl font-bold text-gray-800 mb-4">Hızlı İşlemler</h3>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-        <a href="/Admin/Reservation/Index" class="group flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:bg-red-50 hover:border-red-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-            <span class="material-symbols-outlined text-4xl text-red-600 group-hover:scale-110 transition-transform duration-300 mb-2">event_note</span>
-            <span class="font-medium text-gray-700 group-hover:text-red-700 transition-colors">Rezervasyonları Yönet</span>
-        </a>
+        <div class="lg:col-span-2">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-bold text-slate-800">Hızlı İşlemler</h3>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <a href="/Admin/Reservation/Index" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-sm border border-slate-100 hover:border-red-200 hover:shadow-md transition-all duration-300 text-center">
+                    <div class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-red-600 transition-colors duration-300">
+                        <span class="material-symbols-outlined text-3xl text-red-600 group-hover:text-white transition-colors duration-300">event_note</span>
+                    </div>
+                    <span class="font-bold text-slate-700 group-hover:text-red-700 transition-colors">Rezervasyonları Yönet</span>
+                    <p class="text-xs text-slate-400 mt-2">Müşteri taleplerini onayla veya reddet.</p>
+                </a>
+                <a href="/Admin/Product/CreateProduct" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-sm border border-slate-100 hover:border-red-200 hover:shadow-md transition-all duration-300 text-center">
+                    <div class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-red-600 transition-colors duration-300">
+                        <span class="material-symbols-outlined text-3xl text-red-600 group-hover:text-white transition-colors duration-300">add_circle</span>
+                    </div>
+                    <span class="font-bold text-slate-700 group-hover:text-red-700 transition-colors">Yeni Ürün Ekle</span>
+                    <p class="text-xs text-slate-400 mt-2">Menüye yeni bir lezzet kat.</p>
+                </a>
+                <a href="/Admin/Blog/CreateBlog" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-sm border border-slate-100 hover:border-red-200 hover:shadow-md transition-all duration-300 text-center">
+                    <div class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-red-600 transition-colors duration-300">
+                        <span class="material-symbols-outlined text-3xl text-red-600 group-hover:text-white transition-colors duration-300">post_add</span>
+                    </div>
+                    <span class="font-bold text-slate-700 group-hover:text-red-700 transition-colors">Yeni Blog Yaz</span>
+                    <p class="text-xs text-slate-400 mt-2">Müşterilerinle hikayeni paylaş.</p>
+                </a>
+                <a href="/Admin/Contact/Index" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-sm border border-slate-100 hover:border-red-200 hover:shadow-md transition-all duration-300 text-center">
+                    <div class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-red-600 transition-colors duration-300">
+                        <span class="material-symbols-outlined text-3xl text-red-600 group-hover:text-white transition-colors duration-300">mark_email_unread</span>
+                    </div>
+                    <span class="font-bold text-slate-700 group-hover:text-red-700 transition-colors">Gelen Kutusu</span>
+                    <p class="text-xs text-slate-400 mt-2">Müşteri mesajlarını yanıtla.</p>
+                </a>
+            </div>
+        </div>
 
-        <a href="/Admin/Product/CreateProduct" class="group flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:bg-red-50 hover:border-red-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-            <span class="material-symbols-outlined text-4xl text-red-600 group-hover:scale-110 transition-transform duration-300 mb-2">add_circle</span>
-            <span class="font-medium text-gray-700 group-hover:text-red-700 transition-colors">Yeni Ürün Ekle</span>
-        </a>
+        <div class="lg:col-span-1">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-bold text-slate-800">Sistem Bildirimleri</h3>
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 h-[calc(100%-3rem)]">
+                <div class="relative border-l-2 border-slate-100 ml-3 space-y-8">
 
-        <a href="/Admin/Blog/CreateBlog" class="group flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:bg-red-50 hover:border-red-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-            <span class="material-symbols-outlined text-4xl text-red-600 group-hover:scale-110 transition-transform duration-300 mb-2">post_add</span>
-            <span class="font-medium text-gray-700 group-hover:text-red-700 transition-colors">Yeni Blog Yaz</span>
-        </a>
+                    @if (ViewBag.LastMessage != null)
+                    {
+                        <div class="relative">
+                            <div class="absolute -left-[9px] bg-white p-1 rounded-full">
+                                <div class="w-3 h-3 bg-red-500 rounded-full ring-4 ring-red-50"></div>
+                            </div>
+                            <div class="pl-6">
+                                <p class="text-sm font-bold text-slate-700">Yeni Mesaj: @ViewBag.LastMessage.Name</p>
+                                <p class="text-xs text-slate-500 mt-1">E-Posta: @ViewBag.LastMessage.Email</p>
+                                <span class="text-[10px] font-semibold text-slate-400 mt-2 block">Mesajlar Kutusu</span>
+                            </div>
+                        </div>
+                    }
 
-        <a href="/Admin/Contact/Index" class="group flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:bg-red-50 hover:border-red-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-            <span class="material-symbols-outlined text-4xl text-red-600 group-hover:scale-110 transition-transform duration-300 mb-2">mark_email_unread</span>
-            <span class="font-medium text-gray-700 group-hover:text-red-700 transition-colors">Gelen Kutusuna Git</span>
-        </a>
+                    @if (ViewBag.LastReservation != null)
+                    {
+                        <div class="relative">
+                            <div class="absolute -left-[9px] bg-white p-1 rounded-full">
+                                <div class="w-3 h-3 bg-amber-500 rounded-full ring-4 ring-amber-50"></div>
+                            </div>
+                            <div class="pl-6">
+                                <p class="text-sm font-bold text-slate-700">Rezervasyon: @ViewBag.LastReservation.Name</p>
+                                <p class="text-xs text-slate-500 mt-1">Durum: @ViewBag.LastReservation.Status</p>
+                                <span class="text-[10px] font-semibold text-slate-400 mt-2 block">Rezervasyonlar</span>
+                            </div>
+                        </div>
+                    }
+
+                    @if (ViewBag.LastProduct != null)
+                    {
+                        <div class="relative">
+                            <div class="absolute -left-[9px] bg-white p-1 rounded-full">
+                                <div class="w-3 h-3 bg-emerald-500 rounded-full ring-4 ring-emerald-50"></div>
+                            </div>
+                            <div class="pl-6">
+                                <p class="text-sm font-bold text-slate-700">Son Ürün: @ViewBag.LastProduct.Name</p>
+                                <p class="text-xs text-slate-500 mt-1">Fiyat: @ViewBag.LastProduct.Price ₺</p>
+                                <span class="text-[10px] font-semibold text-slate-400 mt-2 block">Menü Yönetimi</span>
+                            </div>
+                        </div>
+                    }
+
+                    @if (ViewBag.LastBlog != null)
+                    {
+                        <div class="relative">
+                            <div class="absolute -left-[9px] bg-white p-1 rounded-full">
+                                <div class="w-3 h-3 bg-blue-500 rounded-full ring-4 ring-blue-50"></div>
+                            </div>
+                            <div class="pl-6">
+                                <p class="text-sm font-bold text-slate-700">Yeni Blog: @ViewBag.LastBlog.Title</p>
+                                <p class="text-xs text-slate-500 mt-1">Okurlarla yeni bir hikaye paylaşıldı.</p>
+                                <span class="text-[10px] font-semibold text-slate-400 mt-2 block">Blog Yönetimi</span>
+                            </div>
+                        </div>
+                    }
+
+                    @if (ViewBag.LastMessage == null && ViewBag.LastReservation == null && ViewBag.LastProduct == null && ViewBag.LastBlog == null)
+                    {
+                        <p class="text-sm text-slate-500 ml-4">Henüz bir sistem aktivitesi bulunmuyor.</p>
+                    }
+
+                </div>
+
+                
+            </div>
+        </div>
 
     </div>
 </div>

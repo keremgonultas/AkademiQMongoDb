@@ -1,0 +1,65 @@
+﻿@model List<AkademiQMongoDb.DTOs.SubscriberDtos.ResultSubscriberDto>
+@{
+    ViewData["Title"] = "Bülten Aboneleri";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+
+<div class="container-fluid">
+
+    @if (TempData["MailSuccess"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+            <i class="fas fa-check-circle mr-2"></i> @TempData["MailSuccess"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    @if (TempData["MailError"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+            <i class="fas fa-exclamation-triangle mr-2"></i> @TempData["MailError"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    <div class="card shadow-sm border-0 rounded-lg">
+        <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
+            <h5 class="card-title font-weight-bold text-dark mb-0">Abone Listesi</h5>
+            <p class="text-muted text-sm mt-1">Bültene kayıt olan kullanıcılara buradan tek tıkla promosyon kodu gönderebilirsiniz.</p>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover border-bottom">
+                <thead class="bg-light">
+                    <tr>
+                        <th width="5%">#</th>
+                        <th>E-Posta Adresi</th>
+                        <th width="30%" class="text-right">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <tr>
+                            <td class="align-middle font-weight-bold text-muted">@count</td>
+                            <td class="align-middle text-dark">@item.Email</td>
+                            <td class="align-middle text-right">
+                                <a href="/Admin/Subscriber/SendDiscountCode?email=@item.Email" class="btn btn-sm btn-success shadow-sm" onclick="return confirm('@item.Email adresine indirim kodu gönderilecek. Emin misiniz?');">
+                                    <i class="fas fa-paper-plane mr-1"></i> Kod Gönder
+                                </a>
+
+                                <a href="/Admin/Subscriber/DeleteSubscriber/@item.Id" class="btn btn-sm btn-outline-danger shadow-sm ml-2" onclick="return confirm('Bu aboneyi silmek istediğinize emin misiniz?');">
+                                    <i class="fas fa-trash"></i> Sil
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
