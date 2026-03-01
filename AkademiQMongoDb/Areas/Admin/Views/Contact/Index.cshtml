@@ -1,0 +1,55 @@
+﻿@model List<AkademiQMongoDb.DTOs.ContactDtos.ResultContactDto>
+@{
+    ViewData["Title"] = "Gelen Kutusu";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml"; // Admin layout yolunu kontrol et
+    int count = 0;
+}
+
+<div class="container-fluid">
+    <h4 class="page-title">Gelen Kutusu</h4>
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <div class="card-title font-weight-bold text-dark">Müşteri Mesajları</div>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover mt-3">
+                <thead class="thead-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Gönderen</th>
+                        <th>Telefon</th>
+                        <th>Tarih</th>
+                        <th>Durum</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <tr style="@(item.IsRead ? "" : "background-color: #f8f9fa; font-weight: 700;")">
+                            <td class="align-middle">@count</td>
+                            <td class="align-middle">@item.Name</td>
+                            <td class="align-middle">@item.Phone</td>
+                            <td class="align-middle">@item.SendDate.ToString("dd.MM.yyyy HH:mm")</td>
+                            <td class="align-middle">
+                                @if (item.IsRead)
+                                {
+                                    <span class="text-success"><i class="fas fa-check-double"></i> Okundu</span>
+                                }
+                                else
+                                {
+                                    <span class="text-danger"><i class="fas fa-envelope"></i> Yeni</span>
+                                }
+                            </td>
+                            <td class="align-middle">
+                                <a href="/Admin/Contact/MessageDetails/@item.Id" class="btn btn-info btn-sm">Mesajı Oku</a>
+                                <a href="/Admin/Contact/DeleteContact/@item.Id" class="btn btn-danger btn-sm" onclick="return confirm('Bu mesajı silmek istediğinize emin misiniz?');">Sil</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

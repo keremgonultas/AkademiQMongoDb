@@ -1,0 +1,46 @@
+﻿@model AkademiQMongoDb.DTOs.ContactDtos.ResultContactDto
+@{
+    ViewData["Title"] = "Mesaj Detayı";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <div class="card-title font-weight-bold text-dark">Mesaj Detayı</div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label>Gönderen Kişi</label>
+                    <input type="text" class="form-control bg-light" value="@Model.Name" readonly>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>Telefon Numarası</label>
+                    <input type="text" class="form-control bg-light" value="@Model.Phone" readonly>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label>E-Posta Adresi</label>
+                    <input type="text" class="form-control bg-light" value="@Model.Email" readonly>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>Gönderilme Tarihi</label>
+                    <input type="text" class="form-control bg-light" value="@Model.SendDate.ToString("dd MMMM yyyy - HH:mm")" readonly>
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <label>Mesaj İçeriği</label>
+                <textarea class="form-control bg-light" rows="8" readonly>@Model.Message</textarea>
+            </div>
+
+            <div class="mt-4">
+                <a href="/Admin/Contact/Index" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Gelen Kutusuna Dön</a>
+                <a href="/Admin/Contact/DeleteContact/@Model.Id" class="btn btn-danger ml-2" onclick="return confirm('Bu mesajı silmek istediğinize emin misiniz?');"><i class="fas fa-trash"></i> Sil</a>
+            </div>
+        </div>
+    </div>
+</div>

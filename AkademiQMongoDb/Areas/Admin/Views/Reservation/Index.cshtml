@@ -1,0 +1,71 @@
+﻿@model List<AkademiQMongoDb.DTOs.ReservationDtos.ResultReservationDto>
+@{
+    ViewData["Title"] = "Rezervasyonlar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+
+<div class="container-fluid">
+    <h4 class="page-title">Rezervasyon Yönetimi</h4>
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-hover mt-3">
+                <thead class="thead-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Müşteri</th>
+                        <th>Telefon</th>
+                        <th>Tarih & Saat</th>
+                        <th>Kişi</th>
+                        <th>Durum</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <tr class="@(item.Status == "Onay Bekliyor" ? "table-warning" : item.Status == "Onaylandı" ? "table-success" : "table-danger")">
+                            <td class="align-middle">@count</td>
+                            <td class="align-middle">
+                                <strong>@item.Name</strong> <br />
+                                <small>@item.Email</small>
+                            </td>
+                            <td class="align-middle">@item.Phone</td>
+                            <td class="align-middle">@item.ReservationDate <br /> @item.ReservationTime</td>
+                            <td class="align-middle">@item.PersonCount</td>
+                            <td class="align-middle">
+                                @if (item.Status == "Onay Bekliyor")
+                                {
+                                    <span class="badge badge-warning">Onay Bekliyor</span>
+                                }
+                                @if (item.Status == "Onaylandı")
+                                {
+                                    <span class="badge badge-success">Onaylandı</span>
+                                }
+                                @if (item.Status == "İptal Edildi")
+                                {
+                                    <span class="badge badge-danger">İptal Edildi</span>
+                                }
+                            </td>
+                            <td class="align-middle">
+                                @if (item.Status == "Onay Bekliyor")
+                                {
+                                    <a href="/Admin/Reservation/ApproveReservation/@item.Id" class="btn btn-success btn-sm">Onayla</a>
+                                    <a href="/Admin/Reservation/CancelReservation/@item.Id" class="btn btn-danger btn-sm">İptal Et</a>
+                                }
+                                <a href="/Admin/Reservation/DeleteReservation/@item.Id" class="btn btn-outline-dark btn-sm" onclick="return confirm('Silmek istediğinize emin misiniz?');">Sil</a>
+                            </td>
+                        </tr>
+                        @if (!string.IsNullOrEmpty(item.SpecialRequest))
+                        {
+                            <tr>
+                                <td colspan="7" class="text-muted"><small><strong>Özel İstek:</strong> @item.SpecialRequest</small></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

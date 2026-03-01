@@ -1,0 +1,185 @@
+﻿@model AkademiQMongoDb.DTOs.ReservationDtos.CreateReservationDto
+@{
+    ViewData["Title"] = "Rezervasyon";
+    Layout = "~/Views/UILayout/Layout.cshtml"; // Kendi layout yolunu kontrol et
+}
+
+<div class="breadcrumb-area text-center shadow text-light" style="background: linear-gradient(to right, #111111, #4a0000); padding-top: 170px; padding-bottom: 70px; margin-bottom: 50px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <h1 style="font-size: 2.8rem; font-weight: 700; text-transform: none; margin-bottom: 10px;">Masa Ayırtın</h1>
+                <ul class="breadcrumb" style="background: transparent; padding: 0; margin: 0; display: inline-flex; justify-content: center; font-size: 1.1rem;">
+                    <li><a href="/Default/Index"><i class="fas fa-home"></i> Ana Sayfa</a></li>
+                    <li>Rezervasyon</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="reservation-style-one-area default-padding">
+    <div class="container">
+        <div class="reservation-style-one-items bg-dark text-light wow fadeInUp">
+            <div class="row">
+                <div class="col-xl-6 col-lg-5 reservation-thumb">
+                    <img src="/UI/assets/img/thumb/3.jpg" alt="Image Not Found">
+                    <div class="icon">
+                        <img src="/UI/assets/img/icon/1.png" alt="Image Not Found">
+                    </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-7 reservation-info">
+                    <h4 class="sub-heading">Hemen Ayırtın</h4>
+                    <h2 class="title">Muhteşem Bir Akşam Yemeği</h2>
+
+                    <form class="reservation-form" action="/Reservation/Index" method="post">
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Adınız Soyadınız</label>
+                                    <input class="form-control" asp-for="Name" type="text" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Telefon</label>
+                                    <input class="form-control" asp-for="Phone" type="text" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>E-Posta Adresiniz</label>
+                                    <input class="form-control" asp-for="Email" type="email" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Kişi Sayısı</label>
+                                    <select asp-for="PersonCount" class="form-control" required>
+                                        <option value="1 Kişi">1 Kişi</option>
+                                        <option value="2 Kişi">2 Kişi</option>
+                                        <option value="3 Kişi">3 Kişi</option>
+                                        <option value="4 Kişi">4 Kişi</option>
+                                        <option value="5+ Kişi">5+ Kişi</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Tarih</label>
+                                    <input type="date" class="form-control" asp-for="ReservationDate"
+                                           min="@DateTime.Now.ToString("yyyy-MM-dd")"
+                                           max="@DateTime.Now.AddYears(2).ToString("yyyy-MM-dd")" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Saat</label>
+                                    <select asp-for="ReservationTime" class="form-control" required>
+                                        <option value="12:00">12:00</option>
+                                        <option value="12:30">12:30</option>
+                                        <option value="13:00">13:00</option>
+                                        <option value="13:30">13:30</option>
+                                        <option value="14:00">14:00</option>
+                                        <option value="14:30">14:30</option>
+                                        <option value="15:00">15:00</option>
+                                        <option value="15:30">15:30</option>
+                                        <option value="16:00">16:00</option>
+                                        <option value="16:30">16:30</option>
+                                        <option value="17:00">17:00</option>
+                                        <option value="17:30">17:30</option>
+                                        <option value="18:00">18:00</option>
+                                        <option value="18:30">18:30</option>
+                                        <option value="19:00">19:00</option>
+                                        <option value="19:30">19:30</option>
+                                        <option value="20:00">20:00</option>
+                                        <option value="20:30">20:30</option>
+                                        <option value="21:00">21:00</option>
+                                        <option value="21:30">21:30</option>
+                                        <option value="22:00">22:00</option>
+                                       
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Özel İstekleriniz (İsteğe Bağlı)</label>
+                                    <textarea class="form-control" asp-for="SpecialRequest" placeholder="Cam kenarı, doğum günü kutlaması vb." rows="2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <button type="submit" class="btn mt-3" style="background-color: #e60000; color: white; width: 100%; font-weight: bold; padding: 12px; border-radius: 5px;">
+                                    Masamı Ayırt
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if (TempData["SuccessMessage"] != null)
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                title: 'Harika!',
+                text: '@Html.Raw(TempData["SuccessMessage"])',
+                icon: 'success',
+                confirmButtonText: 'Tamam',
+                confirmButtonColor: '#e60000'
+            });
+        });
+    </script>
+}
+
+<style>
+   
+    .datepicker,
+    .datepicker-dropdown,
+    .ui-datepicker,
+    .xdsoft_datetimepicker,
+    .daterangepicker {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+
+    
+    .reservation-style-one-area .form-control {
+        height: 55px !important; 
+        padding-top: 15px !important; 
+        padding-bottom: 15px !important;
+        line-height: 25px !important; 
+        box-sizing: border-box !important;
+    }
+
+    
+    .reservation-style-one-area textarea.form-control {
+        height: auto !important;
+        min-height: 120px !important;
+        padding-top: 15px !important;
+        padding-bottom: 15px !important;
+    }
+</style>
