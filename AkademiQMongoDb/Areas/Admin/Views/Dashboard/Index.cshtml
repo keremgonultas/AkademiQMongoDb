@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid p-6 bg-gray-50 min-h-screen">
+
+    <div class="mb-8">
+        <h2 class="text-3xl font-bold text-gray-800">Hoş Geldiniz, Admin! 👋</h2>
+        <p class="text-gray-500 mt-1">Restoranınızın bugünkü özet durumu ve hızlı işlemler aşağıdadır.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+
+        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-red-600 flex items-center justify-between hover:shadow-md transition-shadow">
+            <div>
+                <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Okunmamış Mesaj</p>
+                <h3 class="text-3xl font-bold text-gray-800 mt-1">@ViewBag.UnreadMessages</h3>
+                <p class="text-xs text-gray-400 mt-1">Toplam: @ViewBag.TotalMessages mesaj</p>
+            </div>
+            <div class="p-3 bg-red-100 rounded-full text-red-600">
+                <span class="material-symbols-outlined text-3xl">mail</span>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-yellow-500 flex items-center justify-between hover:shadow-md transition-shadow">
+            <div>
+                <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Bekleyen Rezervasyon</p>
+                <h3 class="text-3xl font-bold text-gray-800 mt-1">@ViewBag.PendingReservations</h3>
+                <p class="text-xs text-gray-400 mt-1">Toplam: @ViewBag.TotalReservations rezervasyon</p>
+            </div>
+            <div class="p-3 bg-yellow-100 rounded-full text-yellow-600">
+                <span class="material-symbols-outlined text-3xl">calendar_month</span>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-green-500 flex items-center justify-between hover:shadow-md transition-shadow">
+            <div>
+                <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Menüdeki Ürünler</p>
+                <h3 class="text-3xl font-bold text-gray-800 mt-1">@ViewBag.TotalProducts</h3>
+                <p class="text-xs text-green-500 mt-1 font-medium">+3 bu hafta eklendi</p>
+            </div>
+            <div class="p-3 bg-green-100 rounded-full text-green-600">
+                <span class="material-symbols-outlined text-3xl">restaurant_menu</span>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-500 flex items-center justify-between hover:shadow-md transition-shadow">
+            <div>
+                <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Yayındaki Bloglar</p>
+                <h3 class="text-3xl font-bold text-gray-800 mt-1">@ViewBag.TotalBlogs</h3>
+                <p class="text-xs text-gray-400 mt-1">Son yazı: 2 gün önce</p>
+            </div>
+            <div class="p-3 bg-blue-100 rounded-full text-blue-600">
+                <span class="material-symbols-outlined text-3xl">article</span>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="text-xl font-bold text-gray-800 mb-4">Hızlı İşlemler</h3>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+        <a href="/Admin/Reservation/Index" class="group flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:bg-red-50 hover:border-red-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+            <span class="material-symbols-outlined text-4xl text-red-600 group-hover:scale-110 transition-transform duration-300 mb-2">event_note</span>
+            <span class="font-medium text-gray-700 group-hover:text-red-700 transition-colors">Rezervasyonları Yönet</span>
+        </a>
+
+        <a href="/Admin/Product/CreateProduct" class="group flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:bg-red-50 hover:border-red-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+            <span class="material-symbols-outlined text-4xl text-red-600 group-hover:scale-110 transition-transform duration-300 mb-2">add_circle</span>
+            <span class="font-medium text-gray-700 group-hover:text-red-700 transition-colors">Yeni Ürün Ekle</span>
+        </a>
+
+        <a href="/Admin/Blog/CreateBlog" class="group flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:bg-red-50 hover:border-red-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+            <span class="material-symbols-outlined text-4xl text-red-600 group-hover:scale-110 transition-transform duration-300 mb-2">post_add</span>
+            <span class="font-medium text-gray-700 group-hover:text-red-700 transition-colors">Yeni Blog Yaz</span>
+        </a>
+
+        <a href="/Admin/Contact/Index" class="group flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:bg-red-50 hover:border-red-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+            <span class="material-symbols-outlined text-4xl text-red-600 group-hover:scale-110 transition-transform duration-300 mb-2">mark_email_unread</span>
+            <span class="font-medium text-gray-700 group-hover:text-red-700 transition-colors">Gelen Kutusuna Git</span>
+        </a>
+
+    </div>
+</div>
