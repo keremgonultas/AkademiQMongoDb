@@ -5,6 +5,7 @@ using AkademiQMongoDb.Services.BlogServices;
 using AkademiQMongoDb.Services.CategoryServices;
 using AkademiQMongoDb.Services.ChefServices;
 using AkademiQMongoDb.Services.ContactServices;
+using AkademiQMongoDb.Services.GalleryServices;
 using AkademiQMongoDb.Services.ProductServices;
 using AkademiQMongoDb.Services.ReservationServices;
 using AkademiQMongoDb.Services.TestimonialServices;
@@ -33,6 +34,7 @@ builder.Services.AddScoped<ITestimonialService, TestimonialService>();
 builder.Services.AddScoped<IBlogService, BlogService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
+builder.Services.AddScoped<IGalleryService, GalleryService>();
 
 
 builder.Services.AddControllersWithViews(options =>
