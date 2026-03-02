@@ -5,67 +5,159 @@
     int count = 0;
 }
 
-<div class="container-fluid">
-    <h4 class="page-title">Rezervasyon Yönetimi</h4>
-    <div class="card">
-        <div class="card-body">
-            <table class="table table-hover mt-3">
-                <thead class="thead-light">
-                    <tr>
-                        <th>#</th>
-                        <th>Müşteri</th>
-                        <th>Telefon</th>
-                        <th>Tarih & Saat</th>
-                        <th>Kişi</th>
-                        <th>Durum</th>
-                        <th>İşlemler</th>
+<div class="container-fluid p-6 bg-slate-50 min-h-screen font-sans">
+
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+        <div>
+            <h2 class="text-3xl font-extrabold text-slate-800 tracking-tight">Rezervasyon Yönetimi</h2>
+            <p class="text-slate-500 mt-1">Misafirlerinizin masa taleplerini, onay süreçlerini ve özel isteklerini buradan takip edin.</p>
+        </div>
+
+        <button onclick="window.location.reload()" class="group flex items-center gap-2 bg-white border border-slate-200 text-slate-600 hover:text-rose-600 hover:border-rose-200 hover:bg-rose-50 px-5 py-2.5 rounded-xl font-semibold transition-all duration-300 shadow-sm">
+            <span class="material-symbols-outlined text-xl transition-transform duration-300 group-hover:rotate-180">refresh</span>
+            Listeyi Güncelle
+        </button>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+
+                <thead>
+                    <tr class="bg-slate-50 border-b border-slate-100 text-slate-500 text-xs uppercase tracking-wider font-bold">
+                        <th class="py-4 px-6 w-16 text-center">#</th>
+                        <th class="py-4 px-6 w-1/4">MÜŞTERİ BİLGİSİ</th>
+                        <th class="py-4 px-6 w-40">TARİH & SAAT</th>
+                        <th class="py-4 px-6 w-24 text-center">KİŞİ</th>
+                        <th class="py-4 px-6 w-40">DURUM</th>
+                        <th class="py-4 px-6 text-right w-64">İŞLEMLER</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach (var item in Model)
+
+                <tbody class="divide-y divide-slate-100">
+                    @if (Model != null && Model.Any())
                     {
-                        count++;
-                        <tr class="@(item.Status == "Onay Bekliyor" ? "table-warning" : item.Status == "Onaylandı" ? "table-success" : "table-danger")">
-                            <td class="align-middle">@count</td>
-                            <td class="align-middle">
-                                <strong>@item.Name</strong> <br />
-                                <small>@item.Email</small>
-                            </td>
-                            <td class="align-middle">@item.Phone</td>
-                            <td class="align-middle">@item.ReservationDate <br /> @item.ReservationTime</td>
-                            <td class="align-middle">@item.PersonCount</td>
-                            <td class="align-middle">
-                                @if (item.Status == "Onay Bekliyor")
-                                {
-                                    <span class="badge badge-warning">Onay Bekliyor</span>
-                                }
-                                @if (item.Status == "Onaylandı")
-                                {
-                                    <span class="badge badge-success">Onaylandı</span>
-                                }
-                                @if (item.Status == "İptal Edildi")
-                                {
-                                    <span class="badge badge-danger">İptal Edildi</span>
-                                }
-                            </td>
-                            <td class="align-middle">
-                                @if (item.Status == "Onay Bekliyor")
-                                {
-                                    <a href="/Admin/Reservation/ApproveReservation/@item.Id" class="btn btn-success btn-sm">Onayla</a>
-                                    <a href="/Admin/Reservation/CancelReservation/@item.Id" class="btn btn-danger btn-sm">İptal Et</a>
-                                }
-                                <a href="/Admin/Reservation/DeleteReservation/@item.Id" class="btn btn-outline-dark btn-sm" onclick="return confirm('Silmek istediğinize emin misiniz?');">Sil</a>
-                            </td>
-                        </tr>
-                        @if (!string.IsNullOrEmpty(item.SpecialRequest))
+                        foreach (var item in Model)
                         {
-                            <tr>
-                                <td colspan="7" class="text-muted"><small><strong>Özel İstek:</strong> @item.SpecialRequest</small></td>
+                            count++;
+
+                            // Duruma göre satırın soluna eklenecek zarif renk çizgisi
+                            string borderClass = item.Status == "Onay Bekliyor" ? "border-l-amber-400" :
+                            item.Status == "Onaylandı" ? "border-l-emerald-500" : "border-l-red-500";
+
+                            // Ana Rezervasyon Satırı
+                            <tr class="hover:bg-slate-50 transition-colors duration-200 group relative">
+                                <td class="py-4 px-6 text-center text-sm font-bold text-slate-400 border-l-4 @borderClass">
+                                    @count
+                                </td>
+
+                                <td class="py-4 px-6">
+                                    <div class="flex flex-col">
+                                        <span class="text-sm font-extrabold text-slate-800">@item.Name</span>
+                                        <div class="flex items-center gap-3 mt-1">
+                                            <span class="inline-flex items-center gap-1 text-[11px] font-medium text-slate-500">
+                                                <span class="material-symbols-outlined text-[14px]">mail</span> @item.Email
+                                            </span>
+                                            <span class="inline-flex items-center gap-1 text-[11px] font-medium text-slate-500">
+                                                <span class="material-symbols-outlined text-[14px]">call</span> @item.Phone
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td class="py-4 px-6">
+                                    <div class="flex flex-col gap-1">
+                                        <span class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700">
+                                            <span class="material-symbols-outlined text-[16px] text-rose-500">calendar_month</span>
+                                            @item.ReservationDate
+                                        </span>
+                                        <span class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 ml-0.5">
+                                            <span class="material-symbols-outlined text-[16px] text-slate-400">schedule</span>
+                                            @item.ReservationTime
+                                        </span>
+                                    </div>
+                                </td>
+
+                                <td class="py-4 px-6 text-center">
+                                    <div class="inline-flex items-center justify-center gap-1 bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg border border-slate-200">
+                                        <span class="material-symbols-outlined text-[16px]">group</span>
+                                        <span class="text-sm font-bold">@item.PersonCount</span>
+                                    </div>
+                                </td>
+
+                                <td class="py-4 px-6">
+                                    @if (item.Status == "Onay Bekliyor")
+                                    {
+                                        <span class="inline-flex items-center gap-1 bg-amber-100 text-amber-700 px-3 py-1.5 rounded-lg text-xs font-bold border border-amber-200 animate-pulse">
+                                            <span class="material-symbols-outlined text-[14px]">hourglass_empty</span>
+                                            Bekliyor
+                                        </span>
+                                    }
+                                    else if (item.Status == "Onaylandı")
+                                    {
+                                        <span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg text-xs font-bold border border-emerald-200">
+                                            <span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                            Onaylandı
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="inline-flex items-center gap-1 bg-red-100 text-red-700 px-3 py-1.5 rounded-lg text-xs font-bold border border-red-200">
+                                            <span class="material-symbols-outlined text-[14px]">cancel</span>
+                                            İptal Edildi
+                                        </span>
+                                    }
+                                </td>
+
+                                <td class="py-4 px-6">
+                                    <div class="flex items-center justify-end gap-2">
+                                        @if (item.Status == "Onay Bekliyor")
+                                        {
+                                            <a href="/Admin/Reservation/ApproveReservation/@item.Id" class="w-8 h-8 flex items-center justify-center bg-emerald-50 text-emerald-600 rounded-lg hover:bg-emerald-600 hover:text-white transition-colors duration-300 shadow-sm" title="Onayla">
+                                                <span class="material-symbols-outlined text-[18px]">done</span>
+                                            </a>
+                                            <a href="/Admin/Reservation/CancelReservation/@item.Id" class="w-8 h-8 flex items-center justify-center bg-rose-50 text-rose-600 rounded-lg hover:bg-rose-600 hover:text-white transition-colors duration-300 shadow-sm" title="İptal Et">
+                                                <span class="material-symbols-outlined text-[18px]">close</span>
+                                            </a>
+                                        }
+
+                                        <a href="/Admin/Reservation/DeleteReservation/@item.Id" onclick="return confirm('Bu rezervasyon kaydını tamamen silmek istediğinize emin misiniz?')" class="flex items-center gap-1 px-3 py-1.5 bg-white border border-slate-200 text-slate-500 rounded-lg hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-colors duration-300 shadow-sm ml-2">
+                                            <span class="material-symbols-outlined text-[16px]">delete</span>
+                                            <span class="text-xs font-bold">Sil</span>
+                                        </a>
+                                    </div>
+                                </td>
                             </tr>
+
+                            @if (!string.IsNullOrEmpty(item.SpecialRequest))
+                            {
+                                <tr class="bg-rose-50/30">
+                                    <td colspan="6" class="py-3 px-6 border-l-4 @borderClass">
+                                        <div class="flex items-start gap-2 text-rose-700">
+                                            <span class="material-symbols-outlined text-[18px] mt-0.5">speaker_notes</span>
+                                            <p class="text-sm">
+                                                <strong class="font-bold">Özel İstek:</strong>
+                                                <span class="font-medium">@item.SpecialRequest</span>
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
                         }
                     }
                 </tbody>
             </table>
+
+            @if (Model == null || !Model.Any())
+            {
+                <div class="p-10 text-center flex flex-col items-center justify-center">
+                    <div class="w-16 h-16 bg-rose-50 rounded-full flex items-center justify-center mb-4 ring-4 ring-rose-50 border border-rose-100">
+                        <span class="material-symbols-outlined text-3xl text-rose-400">table_restaurant</span>
+                    </div>
+                    <p class="text-slate-500 font-medium">Sistemde henüz bir rezervasyon kaydı bulunmuyor.</p>
+                </div>
+            }
+
         </div>
     </div>
 </div>

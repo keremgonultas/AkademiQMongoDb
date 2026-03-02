@@ -1,55 +1,120 @@
 ﻿@model List<AkademiQMongoDb.DTOs.ContactDtos.ResultContactDto>
 @{
     ViewData["Title"] = "Gelen Kutusu";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml"; // Admin layout yolunu kontrol et
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
     int count = 0;
 }
 
-<div class="container-fluid">
-    <h4 class="page-title">Gelen Kutusu</h4>
-    <div class="card shadow-sm">
-        <div class="card-header bg-white">
-            <div class="card-title font-weight-bold text-dark">Müşteri Mesajları</div>
+<div class="container-fluid p-6 bg-slate-50 min-h-screen font-sans">
+
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+        <div>
+            <h2 class="text-3xl font-extrabold text-slate-800 tracking-tight">Gelen Kutusu</h2>
+            <p class="text-slate-500 mt-1">Müşterilerinizden gelen iletişim formlarını, soru ve talepleri buradan takip edebilirsiniz.</p>
         </div>
-        <div class="card-body">
-            <table class="table table-hover mt-3">
-                <thead class="thead-light">
-                    <tr>
-                        <th>#</th>
-                        <th>Gönderen</th>
-                        <th>Telefon</th>
-                        <th>Tarih</th>
-                        <th>Durum</th>
-                        <th>İşlemler</th>
+
+        <button onclick="window.location.reload()" class="group flex items-center gap-2 bg-white border border-slate-200 text-slate-600 hover:text-teal-600 hover:border-teal-200 hover:bg-teal-50 px-5 py-2.5 rounded-xl font-semibold transition-all duration-300 shadow-sm">
+            <span class="material-symbols-outlined text-xl transition-transform duration-300 group-hover:rotate-180">refresh</span>
+            Sayfayı Yenile
+        </button>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+
+                <thead>
+                    <tr class="bg-slate-50 border-b border-slate-100 text-slate-500 text-xs uppercase tracking-wider font-bold">
+                        <th class="py-4 px-6 w-16 text-center">#</th>
+                        <th class="py-4 px-6 w-1/4">GÖNDEREN</th>
+                        <th class="py-4 px-6 w-40">TELEFON</th>
+                        <th class="py-4 px-6 w-48">TARİH</th>
+                        <th class="py-4 px-6 w-32">DURUM</th>
+                        <th class="py-4 px-6 text-right w-48">İŞLEMLER</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach (var item in Model)
+
+                <tbody class="divide-y divide-slate-100">
+                    @if (Model != null && Model.Any())
                     {
-                        count++;
-                        <tr style="@(item.IsRead ? "" : "background-color: #f8f9fa; font-weight: 700;")">
-                            <td class="align-middle">@count</td>
-                            <td class="align-middle">@item.Name</td>
-                            <td class="align-middle">@item.Phone</td>
-                            <td class="align-middle">@item.SendDate.ToString("dd.MM.yyyy HH:mm")</td>
-                            <td class="align-middle">
-                                @if (item.IsRead)
-                                {
-                                    <span class="text-success"><i class="fas fa-check-double"></i> Okundu</span>
-                                }
-                                else
-                                {
-                                    <span class="text-danger"><i class="fas fa-envelope"></i> Yeni</span>
-                                }
-                            </td>
-                            <td class="align-middle">
-                                <a href="/Admin/Contact/MessageDetails/@item.Id" class="btn btn-info btn-sm">Mesajı Oku</a>
-                                <a href="/Admin/Contact/DeleteContact/@item.Id" class="btn btn-danger btn-sm" onclick="return confirm('Bu mesajı silmek istediğinize emin misiniz?');">Sil</a>
-                            </td>
-                        </tr>
+                        foreach (var item in Model)
+                        {
+                            count++;
+                            <tr class="hover:bg-slate-50 transition-colors duration-200 group @(item.IsRead ? "bg-white" : "bg-teal-50/40")">
+
+                                <td class="py-4 px-6 text-center text-sm font-bold text-slate-400">@count</td>
+
+                                <td class="py-4 px-6">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 border border-slate-200 group-hover:border-teal-300 group-hover:text-teal-600 transition-colors">
+                                            <span class="material-symbols-outlined text-[20px]">person</span>
+                                        </div>
+                                        <span class="text-sm @(item.IsRead ? "font-medium text-slate-700" : "font-extrabold text-slate-900") block truncate w-40" title="@item.Name">
+                                            @item.Name
+                                        </span>
+                                    </div>
+                                </td>
+
+                                <td class="py-4 px-6">
+                                    <span class="inline-flex items-center gap-1.5 text-xs font-medium @(item.IsRead ? "text-slate-500" : "text-slate-800 font-bold")">
+                                        <span class="material-symbols-outlined text-[16px] text-slate-400">call</span>
+                                        @item.Phone
+                                    </span>
+                                </td>
+
+                                <td class="py-4 px-6">
+                                    <span class="inline-flex items-center gap-1.5 text-xs font-medium @(item.IsRead ? "text-slate-500" : "text-slate-800 font-bold")">
+                                        <span class="material-symbols-outlined text-[16px] text-slate-400">schedule</span>
+                                        @item.SendDate.ToString("dd.MM.yyyy HH:mm")
+                                    </span>
+                                </td>
+
+                                <td class="py-4 px-6">
+                                    @if (item.IsRead)
+                                    {
+                                        <span class="inline-flex items-center gap-1 text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-200">
+                                            <span class="material-symbols-outlined text-[14px]">done_all</span>
+                                            Okundu
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="inline-flex items-center gap-1 bg-teal-100 text-teal-700 px-3 py-1.5 rounded-lg text-xs font-bold border border-teal-200 animate-pulse">
+                                            <span class="material-symbols-outlined text-[14px]">mark_email_unread</span>
+                                            Yeni
+                                        </span>
+                                    }
+                                </td>
+
+                                <td class="py-4 px-6">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <a href="/Admin/Contact/MessageDetails/@item.Id" class="flex items-center gap-1 px-3 py-2 bg-teal-50 text-teal-600 rounded-lg hover:bg-teal-600 hover:text-white transition-colors duration-300 shadow-sm">
+                                            <span class="material-symbols-outlined text-[18px]">visibility</span>
+                                            <span class="text-xs font-bold hidden xl:block">Mesajı Oku</span>
+                                        </a>
+
+                                        <a href="/Admin/Contact/DeleteContact/@item.Id" onclick="return confirm('Bu müşteri mesajını silmek istediğinize emin misiniz?')" class="flex items-center gap-1 px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-colors duration-300 shadow-sm">
+                                            <span class="material-symbols-outlined text-[18px]">delete</span>
+                                            <span class="text-xs font-bold hidden xl:block">Sil</span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>
+
+            @if (Model == null || !Model.Any())
+            {
+                <div class="p-10 text-center flex flex-col items-center justify-center">
+                    <div class="w-16 h-16 bg-teal-50 rounded-full flex items-center justify-center mb-4 ring-4 ring-teal-50 border border-teal-100">
+                        <span class="material-symbols-outlined text-3xl text-teal-400">inbox</span>
+                    </div>
+                    <p class="text-slate-500 font-medium">Gelen kutunuz şu anda tamamen boş.</p>
+                </div>
+            }
+
         </div>
     </div>
 </div>

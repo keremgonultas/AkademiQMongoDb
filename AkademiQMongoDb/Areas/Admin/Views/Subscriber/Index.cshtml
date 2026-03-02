@@ -5,61 +5,107 @@
     int count = 0;
 }
 
-<div class="container-fluid">
+<div class="container-fluid p-6 bg-slate-50 min-h-screen font-sans">
 
     @if (TempData["MailSuccess"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-            <i class="fas fa-check-circle mr-2"></i> @TempData["MailSuccess"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+        <div class="mb-6 flex items-center justify-between p-4 text-sm text-emerald-800 rounded-xl bg-emerald-50 border border-emerald-200 shadow-sm animate-[pulse_2s_ease-in-out_1]" role="alert">
+            <div class="flex items-center gap-2 font-bold">
+                <span class="material-symbols-outlined text-emerald-600">check_circle</span>
+                @TempData["MailSuccess"]
+            </div>
+            <button type="button" onclick="this.parentElement.style.display='none'" class="text-emerald-600 hover:text-emerald-800 hover:bg-emerald-100 p-1 rounded-lg transition-colors">
+                <span class="material-symbols-outlined text-[20px]">close</span>
             </button>
         </div>
     }
+
     @if (TempData["MailError"] != null)
     {
-        <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
-            <i class="fas fa-exclamation-triangle mr-2"></i> @TempData["MailError"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+        <div class="mb-6 flex items-center justify-between p-4 text-sm text-red-800 rounded-xl bg-red-50 border border-red-200 shadow-sm animate-[pulse_2s_ease-in-out_1]" role="alert">
+            <div class="flex items-center gap-2 font-bold">
+                <span class="material-symbols-outlined text-red-600">error</span>
+                @TempData["MailError"]
+            </div>
+            <button type="button" onclick="this.parentElement.style.display='none'" class="text-red-600 hover:text-red-800 hover:bg-red-100 p-1 rounded-lg transition-colors">
+                <span class="material-symbols-outlined text-[20px]">close</span>
             </button>
         </div>
     }
 
-    <div class="card shadow-sm border-0 rounded-lg">
-        <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
-            <h5 class="card-title font-weight-bold text-dark mb-0">Abone Listesi</h5>
-            <p class="text-muted text-sm mt-1">Bültene kayıt olan kullanıcılara buradan tek tıkla promosyon kodu gönderebilirsiniz.</p>
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+        <div>
+            <h2 class="text-3xl font-extrabold text-slate-800 tracking-tight">Bülten Aboneleri</h2>
+            <p class="text-slate-500 mt-1">Sitenize kayıt olan müşterilerinize buradan tek tıkla özel promosyon ve indirim kodları gönderebilirsiniz.</p>
         </div>
-        <div class="card-body">
-            <table class="table table-hover border-bottom">
-                <thead class="bg-light">
-                    <tr>
-                        <th width="5%">#</th>
-                        <th>E-Posta Adresi</th>
-                        <th width="30%" class="text-right">İşlemler</th>
+
+        <button onclick="window.location.reload()" class="group flex items-center gap-2 bg-white border border-slate-200 text-slate-600 hover:text-violet-600 hover:border-violet-200 hover:bg-violet-50 px-5 py-2.5 rounded-xl font-semibold transition-all duration-300 shadow-sm">
+            <span class="material-symbols-outlined text-xl transition-transform duration-300 group-hover:rotate-180">refresh</span>
+            Listeyi Güncelle
+        </button>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+
+                <thead>
+                    <tr class="bg-slate-50 border-b border-slate-100 text-slate-500 text-xs uppercase tracking-wider font-bold">
+                        <th class="py-4 px-6 w-16 text-center">#</th>
+                        <th class="py-4 px-6 w-2/3">E-Posta Adresi</th>
+                        <th class="py-4 px-6 text-right w-64">İşlemler</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        count++;
-                        <tr>
-                            <td class="align-middle font-weight-bold text-muted">@count</td>
-                            <td class="align-middle text-dark">@item.Email</td>
-                            <td class="align-middle text-right">
-                                <a href="/Admin/Subscriber/SendDiscountCode?email=@item.Email" class="btn btn-sm btn-success shadow-sm" onclick="return confirm('@item.Email adresine indirim kodu gönderilecek. Emin misiniz?');">
-                                    <i class="fas fa-paper-plane mr-1"></i> Kod Gönder
-                                </a>
 
-                                <a href="/Admin/Subscriber/DeleteSubscriber/@item.Id" class="btn btn-sm btn-outline-danger shadow-sm ml-2" onclick="return confirm('Bu aboneyi silmek istediğinize emin misiniz?');">
-                                    <i class="fas fa-trash"></i> Sil
-                                </a>
-                            </td>
-                        </tr>
+                <tbody class="divide-y divide-slate-100">
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            count++;
+                            <tr class="hover:bg-slate-50 transition-colors duration-200 group">
+                                <td class="py-4 px-6 text-center text-sm font-bold text-slate-400">@count</td>
+
+                                <td class="py-4 px-6">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 border border-slate-200 group-hover:border-violet-300 group-hover:text-violet-600 transition-colors shadow-sm">
+                                            <span class="material-symbols-outlined text-[20px]">alternate_email</span>
+                                        </div>
+                                        <span class="text-sm font-bold text-slate-700 group-hover:text-violet-700 transition-colors">
+                                            @item.Email
+                                        </span>
+                                    </div>
+                                </td>
+
+                                <td class="py-4 px-6">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <a href="/Admin/Subscriber/SendDiscountCode?email=@item.Email" onclick="return confirm('@item.Email adresine özel promosyon kodu gönderilecektir. Emin misiniz?');" class="flex items-center gap-1.5 px-3 py-2 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition-colors duration-300 shadow-md shadow-violet-500/30">
+                                            <span class="material-symbols-outlined text-[18px]">send</span>
+                                            <span class="text-xs font-bold hidden xl:block">Kod Gönder</span>
+                                        </a>
+
+                                        <a href="/Admin/Subscriber/DeleteSubscriber/@item.Id" onclick="return confirm('Bu aboneyi mail bülteni listenizden çıkarmak istediğinize emin misiniz?')" class="flex items-center gap-1 px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-colors duration-300 shadow-sm ml-1">
+                                            <span class="material-symbols-outlined text-[18px]">person_remove</span>
+                                            <span class="text-xs font-bold hidden xl:block">Sil</span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>
+
+            @if (Model == null || !Model.Any())
+            {
+                <div class="p-10 text-center flex flex-col items-center justify-center">
+                    <div class="w-16 h-16 bg-violet-50 rounded-full flex items-center justify-center mb-4 ring-4 ring-violet-100 border border-violet-200">
+                        <span class="material-symbols-outlined text-3xl text-violet-500">subscriptions</span>
+                    </div>
+                    <p class="text-slate-500 font-medium">Bülteninize kayıtlı henüz hiçbir abone bulunmuyor.</p>
+                </div>
+            }
+
         </div>
     </div>
 </div>

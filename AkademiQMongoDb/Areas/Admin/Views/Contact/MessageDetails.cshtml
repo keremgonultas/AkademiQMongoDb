@@ -4,43 +4,80 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="container-fluid">
-    <div class="card shadow-sm">
-        <div class="card-header bg-white">
-            <div class="card-title font-weight-bold text-dark">Mesaj Detayı</div>
+<div class="container-fluid p-6 bg-slate-50 min-h-screen font-sans">
+
+    <div class="mb-8">
+        <div class="flex items-center gap-3 mb-2">
+            <a href="/Admin/Contact/Index" class="w-10 h-10 flex items-center justify-center bg-white rounded-full border border-slate-200 text-slate-500 hover:text-teal-600 hover:border-teal-200 hover:shadow-sm transition-all duration-300">
+                <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+            </a>
+            <h2 class="text-3xl font-extrabold text-slate-800 tracking-tight">Mesaj Detayı</h2>
         </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6 form-group">
-                    <label>Gönderen Kişi</label>
-                    <input type="text" class="form-control bg-light" value="@Model.Name" readonly>
+        <p class="text-slate-500 ml-13">Müşterinizden gelen formun tüm detaylarını aşağıdan inceleyebilirsiniz.</p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 w-full overflow-hidden">
+
+        <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex items-center gap-4">
+            <div class="w-14 h-14 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center border border-teal-200 shadow-sm">
+                <span class="material-symbols-outlined text-[28px]">person</span>
+            </div>
+            <div>
+                <h3 class="text-xl font-extrabold text-slate-800">@Model.Name</h3>
+                <p class="text-sm text-slate-500 flex items-center gap-1.5 mt-0.5">
+                    <span class="material-symbols-outlined text-[16px]">schedule</span>
+                    @Model.SendDate.ToString("dd MMMM yyyy - HH:mm") itibarıyla gönderildi
+                </p>
+            </div>
+        </div>
+
+        <div class="p-8">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+
+                <div class="flex items-center gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100 transition-colors hover:bg-white hover:border-teal-100 hover:shadow-sm">
+                    <div class="w-12 h-12 rounded-lg bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-400">
+                        <span class="material-symbols-outlined text-[22px]">mail</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-0.5">E-POSTA ADRESİ</p>
+                        <p class="text-sm font-bold text-slate-700">@Model.Email</p>
+                    </div>
                 </div>
-                <div class="col-md-6 form-group">
-                    <label>Telefon Numarası</label>
-                    <input type="text" class="form-control bg-light" value="@Model.Phone" readonly>
+
+                <div class="flex items-center gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100 transition-colors hover:bg-white hover:border-teal-100 hover:shadow-sm">
+                    <div class="w-12 h-12 rounded-lg bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-400">
+                        <span class="material-symbols-outlined text-[22px]">call</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-0.5">TELEFON NUMARASI</p>
+                        <p class="text-sm font-bold text-slate-700">@Model.Phone</p>
+                    </div>
                 </div>
+
             </div>
 
-            <div class="row">
-                <div class="col-md-6 form-group">
-                    <label>E-Posta Adresi</label>
-                    <input type="text" class="form-control bg-light" value="@Model.Email" readonly>
-                </div>
-                <div class="col-md-6 form-group">
-                    <label>Gönderilme Tarihi</label>
-                    <input type="text" class="form-control bg-light" value="@Model.SendDate.ToString("dd MMMM yyyy - HH:mm")" readonly>
-                </div>
+            <div>
+                <h4 class="text-sm font-bold text-slate-700 mb-3 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-teal-500">format_quote</span>
+                    Müşteri Mesajı
+                </h4>
+
+                <div class="w-full p-6 bg-teal-50/30 border border-teal-100 rounded-2xl text-slate-800 leading-relaxed text-[15px] min-h-[200px] whitespace-pre-wrap shadow-inner font-medium">@Model.Message</div>
             </div>
 
-            <div class="form-group mt-3">
-                <label>Mesaj İçeriği</label>
-                <textarea class="form-control bg-light" rows="8" readonly>@Model.Message</textarea>
+            <div class="mt-8 flex items-center justify-between pt-6 border-t border-slate-100">
+                <a href="/Admin/Contact/Index" class="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-xl font-bold shadow-md shadow-teal-500/30 transition-all duration-300 hover:-translate-y-0.5">
+                    <span class="material-symbols-outlined text-[20px]">inbox</span>
+                    Gelen Kutusuna Dön
+                </a>
+
+                <a href="/Admin/Contact/DeleteContact/@Model.Id" onclick="return confirm('Bu mesajı tamamen silmek istediğinize emin misiniz?')" class="flex items-center gap-2 bg-white border border-red-200 text-red-600 hover:text-white hover:bg-red-600 px-5 py-2.5 rounded-xl font-bold transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-red-500/30">
+                    <span class="material-symbols-outlined text-[20px]">delete</span>
+                    Mesajı Sil
+                </a>
             </div>
 
-            <div class="mt-4">
-                <a href="/Admin/Contact/Index" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Gelen Kutusuna Dön</a>
-                <a href="/Admin/Contact/DeleteContact/@Model.Id" class="btn btn-danger ml-2" onclick="return confirm('Bu mesajı silmek istediğinize emin misiniz?');"><i class="fas fa-trash"></i> Sil</a>
-            </div>
         </div>
     </div>
 </div>
