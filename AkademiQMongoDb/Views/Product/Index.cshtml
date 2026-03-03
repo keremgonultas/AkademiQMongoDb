@@ -14,8 +14,7 @@
                 <h1 style="font-size: 2.8rem; font-weight: 700; text-transform: none; margin-bottom: 10px;">Lezzet Menümüz</h1>
                 <ul class="breadcrumb" style="background: transparent; padding: 0; margin: 0; display: inline-flex; justify-content: center; font-size: 1.1rem;">
                     <li><a href="/Default/Index" style="color: #e5e7eb; text-decoration: none; transition: 0.3s;"><i class="fas fa-home"></i> Ana Sayfa</a></li>
-                    <li style="color: #9ca3af; margin: 0 12px;">/</li>
-                    <li class="active" style="color: #ef4444; font-weight: bold;">Menü</li>
+                    <li>Menü</li>
                 </ul>
             </div>
         </div>
@@ -91,29 +90,58 @@
         const filterBtns = document.querySelectorAll('.filter-btn');
         const menuItems = document.querySelectorAll('.menu-item-box');
 
+        // Filtreleme işlemini yapan ana fonksiyonumuz
+        function applyFilter(targetBtn) {
+            // Tüm butonların aktifliğini al
+            filterBtns.forEach(b => {
+                b.classList.remove('btn-theme');
+                b.classList.add('btn-dark');
+            });
+
+            // Sadece tıklanan (veya URL'den gelen) butonu aktif yap
+            targetBtn.classList.remove('btn-dark');
+            targetBtn.classList.add('btn-theme');
+
+            const filterValue = targetBtn.getAttribute('data-filter');
+
+            // Ürünleri göster/gizle
+            menuItems.forEach(item => {
+                if (filterValue === 'all') {
+                    item.style.display = 'flex'; // Seninkiler flex yapısında
+                } else {
+                    if (item.classList.contains(filterValue)) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        // Tıklama olaylarını butonlara bağla
         filterBtns.forEach(btn => {
             btn.addEventListener('click', function () {
-                filterBtns.forEach(b => {
-                    b.classList.remove('btn-theme');
-                    b.classList.add('btn-dark');
-                });
-                this.classList.remove('btn-dark');
-                this.classList.add('btn-theme');
-
-                const filterValue = this.getAttribute('data-filter');
-
-                menuItems.forEach(item => {
-                    if (filterValue === 'all') {
-                        item.style.display = 'block';
-                    } else {
-                        if (item.classList.contains(filterValue)) {
-                            item.style.display = 'block';
-                        } else {
-                            item.style.display = 'none';
-                        }
-                    }
-                });
+                applyFilter(this);
             });
         });
+
+        // EFSANE DOKUNUŞ: URL'de "category" parametresi var mı diye kontrol et
+        const urlParams = new URLSearchParams(window.location.search);
+        const categoryParam = urlParams.get('category');
+
+        if (categoryParam) {
+            // URL'den gelen "Sıcak İçecekler" gibi bir yazıyı, C# tarafında yaptığın gibi
+            // küçük harfe çevirip boşlukları tireye dönüştürüyoruz (sicak-icecekler vb.)
+            // Not: Türkçe karakter sorunu olmaması için localeLowerCase kullanıyoruz
+            let formattedParam = categoryParam.toLocaleLowerCase('tr-TR').replace(/\s+/g, '-');
+
+            // Bu formata sahip butonu bul
+            const targetBtn = document.querySelector(`.filter-btn[data-filter="${formattedParam}"]`);
+
+            // Eğer buton varsa, ona sanki kullanıcı tıklamış gibi filtreyi uygula!
+            if (targetBtn) {
+                applyFilter(targetBtn);
+            }
+        }
     });
 </script>
