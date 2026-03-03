@@ -90,24 +90,24 @@
         const filterBtns = document.querySelectorAll('.filter-btn');
         const menuItems = document.querySelectorAll('.menu-item-box');
 
-        // Filtreleme işlemini yapan ana fonksiyonumuz
+        
         function applyFilter(targetBtn) {
-            // Tüm butonların aktifliğini al
+            
             filterBtns.forEach(b => {
                 b.classList.remove('btn-theme');
                 b.classList.add('btn-dark');
             });
 
-            // Sadece tıklanan (veya URL'den gelen) butonu aktif yap
+            
             targetBtn.classList.remove('btn-dark');
             targetBtn.classList.add('btn-theme');
 
             const filterValue = targetBtn.getAttribute('data-filter');
 
-            // Ürünleri göster/gizle
+            
             menuItems.forEach(item => {
                 if (filterValue === 'all') {
-                    item.style.display = 'flex'; // Seninkiler flex yapısında
+                    item.style.display = 'flex'; 
                 } else {
                     if (item.classList.contains(filterValue)) {
                         item.style.display = 'flex';
@@ -118,27 +118,25 @@
             });
         }
 
-        // Tıklama olaylarını butonlara bağla
+        
         filterBtns.forEach(btn => {
             btn.addEventListener('click', function () {
                 applyFilter(this);
             });
         });
 
-        // EFSANE DOKUNUŞ: URL'de "category" parametresi var mı diye kontrol et
+        
         const urlParams = new URLSearchParams(window.location.search);
         const categoryParam = urlParams.get('category');
 
         if (categoryParam) {
-            // URL'den gelen "Sıcak İçecekler" gibi bir yazıyı, C# tarafında yaptığın gibi
-            // küçük harfe çevirip boşlukları tireye dönüştürüyoruz (sicak-icecekler vb.)
-            // Not: Türkçe karakter sorunu olmaması için localeLowerCase kullanıyoruz
+           
             let formattedParam = categoryParam.toLocaleLowerCase('tr-TR').replace(/\s+/g, '-');
 
-            // Bu formata sahip butonu bul
+            
             const targetBtn = document.querySelector(`.filter-btn[data-filter="${formattedParam}"]`);
 
-            // Eğer buton varsa, ona sanki kullanıcı tıklamış gibi filtreyi uygula!
+            
             if (targetBtn) {
                 applyFilter(targetBtn);
             }
